@@ -1,18 +1,18 @@
 import com.example.demo.domain.Member;
-import com.example.demo.repository.JpaMemberRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.MemberService;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class MemberServiceTest {
+@SpringBootTest
+@Transactional
+class MemberServiceIntegrationTest {
     MemberService memberService;
-  JpaMemberRepository memberRepository;
-
-
+    MemberRepository memberRepository;
 
     @Test
     void 회원가입() {
@@ -28,6 +28,7 @@ public class MemberServiceTest {
         Member findMember = memberRepository.findByNo(saveNo).get();
         assertThat(member.getId()).isEqualTo(findMember.getId());
     }
+
     @Test
     public void 중복_회원_예외() {
         //given

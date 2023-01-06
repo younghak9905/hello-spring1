@@ -1,18 +1,26 @@
-package domain;
+package com.example.demo.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Member {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long no;
     private String name;
     private String email;
     private String password;
-    private String passwordConfirm;
+
 
     private String id;
 
-    private Long no;
 
-    private String GitHub;
 
-    private String Blog;
+    private String github;
+
+    private String blog;
     public String getName() {
         return name;
     }
@@ -37,28 +45,22 @@ public class Member {
         this.password = password;
     }
 
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
 
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
 
     public String getGitHub() {
-    	return GitHub;
+    	return github;
     }
 
-    public void setGitHub(String GitHub) {
-    	this.GitHub = GitHub;
+    public void setGitHub(String github) {
+    	this.github = github;
     }
 
     public String getBlog() {
-    	return Blog;
+    	return blog;
     }
 
-    public void setBlog(String Blog) {
-    	this.Blog = Blog;
+    public void setBlog(String blog) {
+    	this.blog = blog;
     }
 
     public String getId() {
