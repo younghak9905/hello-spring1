@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>질문글</th>
+            </tr>
+            </thead>
+            <tbody>
+            //ask list
+            <tr th:each="ask : ${asks}">
+                <td th:text="${ask.title}"></td>
+                <td th:text="${ask.contents}"></td>
+                <td th:text="${ask.tags}"></td>"
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

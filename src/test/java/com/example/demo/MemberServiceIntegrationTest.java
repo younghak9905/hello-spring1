@@ -1,3 +1,5 @@
+package com.example.demo;
+
 import com.example.demo.domain.Member;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.MemberService;
@@ -15,12 +17,16 @@ class MemberServiceIntegrationTest {
     MemberRepository memberRepository;
 
     @Test
-    void 회원가입() {
+    void 회원가입() throws Exception {
         //given
         Member member = new Member();
         member.setName("0hak");
-        member.setId("you");
+        member.setId("you1");
         member.setPassword("1234");
+        member.setBlog("https://blog.naver.com/0hak");
+        member.setGitHub("https://github.com/younghak9905/hello-spring1.git");
+
+
         //when
         Long saveNo = memberService.join(member);
         //then

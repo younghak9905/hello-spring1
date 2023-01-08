@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.repository.AskRepository;
+import com.example.demo.repository.JpaAskRepository;
 import com.example.demo.repository.JpaMemberRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +14,7 @@ import javax.sql.DataSource;
 public class Config {
     private final EntityManager em;
     private final DataSource dataSource;
+
     public Config(EntityManager em, DataSource dataSource) {
         this.em = em;
         this.dataSource = dataSource;
@@ -20,11 +23,23 @@ public class Config {
 
     @Bean
     public MemberService memberService() {
+
         return new MemberService(memberRepository());
     }
+
     @Bean
     public MemberRepository memberRepository() {
         return new JpaMemberRepository(em);
+    }
+
+    @Bean
+    public AskService askService() {
+        return new AskService(askRepository());
+    }
+
+    @Bean
+    public AskRepository askRepository() {
+        return new JpaAskRepository(em);
     }
 
 }

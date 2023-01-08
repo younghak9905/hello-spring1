@@ -1,20 +1,38 @@
 package com.example.demo.domain;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import com.example.demo.controller.AskForm;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+@Entity
 public class Ask {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
     private String title;
     private String contents;
-    private String writer;
-    private List<String> tags;
+   // private Long writerNo;
+    private String tags;
    private LocalDateTime createdDate;
-public void ask(String title, String contents, String writer, List<String> tags) {
+public void ask(String title, String contents, String tags) {
         this.title = title;
         this.contents = contents;
-        this.writer = writer;
+       // this.writerNo = writerNo;
         this.tags = tags;
+        this.createdDate = LocalDateTime.now();
+    }
+
+    public void ask(AskForm askForm)
+    {
+        this.title = askForm.getTitle();
+        this.contents = askForm.getContents();
+       // this.writerNo = askForm.getWriterNo();
+        this.tags = askForm.getTags();
         this.createdDate = LocalDateTime.now();
     }
 
@@ -36,16 +54,16 @@ public void ask(String title, String contents, String writer, List<String> tags)
     public void setContents(String contents) {
         this.contents = contents;
     }
-    public String getWriter() {
-        return writer;
+  /*  public Long getWriterNo() {
+        return writerNo;
     }
-    public void setWriter(String writer) {
-        this.writer = writer;
-    }
-    public List<String> getTags() {
+    public void setWriterNo(Long writerNo) {
+        this.writerNo = writerNo;
+    }*/
+    public String getTags() {
         return tags;
     }
-    public void setTags(List<String> tags) {
+    public void setTags(String tags) {
         this.tags = tags;
     }
 

@@ -1,3 +1,5 @@
+package com.example.demo;
+
 import com.example.demo.domain.Member;
 import com.example.demo.repository.JpaMemberRepository;
 import org.junit.jupiter.api.AfterEach;
