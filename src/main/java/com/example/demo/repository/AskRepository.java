@@ -22,11 +22,11 @@ public interface AskRepository {
 
     List<Ask> findByContentsContaining(String contents);
 
-   // Optional<Ask> findByWriterNo(Long writerNo);
+ //  Optional<Ask> findByWriterNo(Long writerNo);
 
     Optional<Ask> findByTags(String tags);
 
-    Optional<Ask> findByCreatedDate(String createdDate);
+   Optional<Ask> findByCreatedDate(String createdDate);
 
     List<Ask> findAll();
 

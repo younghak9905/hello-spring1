@@ -34,6 +34,9 @@ public class AskForm {
         return tags;
     }
 
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
 
 
 

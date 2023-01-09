@@ -57,4 +57,6 @@ public class AskService {
     public List<Ask> findAsks() {
         return askRepository.findAll();
     }
+
+
 }

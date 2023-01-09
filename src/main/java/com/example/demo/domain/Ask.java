@@ -18,13 +18,15 @@ public class Ask {
     private String contents;
    // private Long writerNo;
     private String tags;
-   private LocalDateTime createdDate;
+    private LocalDateTime createdDate;
+
+    // private LocalDateTime createdDate;
 public void ask(String title, String contents, String tags) {
         this.title = title;
         this.contents = contents;
        // this.writerNo = writerNo;
         this.tags = tags;
-        this.createdDate = LocalDateTime.now();
+       this.createdDate = LocalDateTime.now();
     }
 
     public void ask(AskForm askForm)
@@ -33,8 +35,10 @@ public void ask(String title, String contents, String tags) {
         this.contents = askForm.getContents();
        // this.writerNo = askForm.getWriterNo();
         this.tags = askForm.getTags();
-        this.createdDate = LocalDateTime.now();
+       this.createdDate = LocalDateTime.now();
     }
+
+
 
     public Long getNo() {
         return no;
@@ -67,5 +71,10 @@ public void ask(String title, String contents, String tags) {
         this.tags = tags;
     }
 
-
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
 }

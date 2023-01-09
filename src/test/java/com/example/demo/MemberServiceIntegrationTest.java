@@ -4,6 +4,7 @@ import com.example.demo.domain.Member;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.MemberService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,15 +14,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringBootTest
 @Transactional
 class MemberServiceIntegrationTest {
-    MemberService memberService;
-    MemberRepository memberRepository;
+   @Autowired
+   MemberService memberService;
+   @Autowired
+   MemberRepository memberRepository;
 
     @Test
     void 회원가입() throws Exception {
         //given
         Member member = new Member();
-        member.setName("0hak");
-        member.setId("you1");
+        member.setName("0hak11");
+        member.setId("you111");
+        member.setEmail("yeong@naver.com");
         member.setPassword("1234");
         member.setBlog("https://blog.naver.com/0hak");
         member.setGitHub("https://github.com/younghak9905/hello-spring1.git");
@@ -39,9 +43,20 @@ class MemberServiceIntegrationTest {
     public void 중복_회원_예외() {
         //given
         Member member1 = new Member();
-        member1.setId("you");
+
+        member1.setId("you111");
+        member1.setEmail("yeong@naver.com");
+        member1.setPassword("1234");
+        member1.setBlog("https://blog.naver.com/0hak");
+        member1.setGitHub("https://github.com/younghak9905/hello-spring1.git");
+
         Member member2 = new Member();
-        member2.setId("you");
+
+        member2.setId("you111");
+        member2.setEmail("yeong@naver.com");
+        member2.setPassword("1234");
+        member2.setBlog("https://blog.naver.com/0hak");
+        member2.setGitHub("https://github.com/younghak9905/hello-spring1.git");
         //when
         memberService.join(member1);
         IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
