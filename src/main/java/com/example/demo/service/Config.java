@@ -1,17 +1,14 @@
 package com.example.demo.service;
 
-import com.example.demo.repository.AskRepository;
-import com.example.demo.repository.JpaAskRepository;
-import com.example.demo.repository.JpaMemberRepository;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.example.demo.repository.MemberRepository;
-
-import javax.persistence.EntityManager;
-import javax.sql.DataSource;
+import com.example.demo.repository.AskRepository;
 
 @Configuration
 public class Config {
+    /*
     private final EntityManager em;
     private final DataSource dataSource;
 
@@ -19,27 +16,22 @@ public class Config {
         this.em = em;
         this.dataSource = dataSource;
 
+    }*/
+    private final MemberRepository memberRepository;
+    private final AskRepository askRepository;
+    public Config(MemberRepository memberRepository, AskRepository askRepository) {
+        this.memberRepository = memberRepository;
+        this.askRepository = askRepository;
     }
 
-    @Bean
-    public MemberService memberService() {
 
-        return new MemberService(memberRepository());
-    }
+@Bean
+public MemberService memberService() {
+    return new MemberService(memberRepository);
+}
 
-    @Bean
-    public MemberRepository memberRepository() {
-        return new JpaMemberRepository(em);
-    }
-
-    @Bean
-    public AskService askService() {
-        return new AskService(askRepository());
-    }
-
-    @Bean
-    public AskRepository askRepository() {
-        return new JpaAskRepository(em);
-    }
-
+@Bean
+public AskService askService() {
+    return new AskService(askRepository);
+}
 }

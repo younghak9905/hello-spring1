@@ -16,7 +16,7 @@ public class MemberService {
 
     public Long join(Member member) {
         //같은 id 있는 중복 회원 X
-        //validateDuplicateMember(member);
+        validateDuplicateMember(member);
 
         // Save the member
         memberRepository.save(member);

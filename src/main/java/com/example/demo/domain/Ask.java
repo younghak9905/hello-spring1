@@ -1,43 +1,29 @@
 package com.example.demo.domain;
 
 import com.example.demo.controller.AskForm;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+
 @Entity
 public class Ask {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
+    @Column(nullable = false)
     private String title;
+    @Column(nullable = false)
     private String contents;
    // private Long writerNo;
+    @Column(nullable = false)
     private String tags;
+    @CreatedDate
+    @Column(nullable = false)
     private LocalDateTime createdDate;
-
-    // private LocalDateTime createdDate;
-public void ask(String title, String contents, String tags) {
-        this.title = title;
-        this.contents = contents;
-       // this.writerNo = writerNo;
-        this.tags = tags;
-       this.createdDate = LocalDateTime.now();
-    }
-
-    public void ask(AskForm askForm)
-    {
-        this.title = askForm.getTitle();
-        this.contents = askForm.getContents();
-       // this.writerNo = askForm.getWriterNo();
-        this.tags = askForm.getTags();
-       this.createdDate = LocalDateTime.now();
-    }
-
 
 
     public Long getNo() {
@@ -77,4 +63,9 @@ public void ask(String title, String contents, String tags) {
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
+
+
+    // private LocalDateTime createdDate;
+
+
 }

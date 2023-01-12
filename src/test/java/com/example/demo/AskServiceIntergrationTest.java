@@ -41,11 +41,13 @@ void 질문글작성() {
 //when
     List<Ask> askList = askRepository.findAll();
 //then
-    assertThat(askList.get(0).getContents()).isEqualTo("리버싱을 알려주세요");
-    assertThat(askList.get(0).getTitle()).isEqualTo("질문글");
+    assertThat(askList.get(1).getContents()).isEqualTo("리버싱을 알려주세요");
+    assertThat(askList.get(1).getTitle()).isEqualTo("질문글");
     //assertThat(askList.get(0).getWriterNo()).isEqualTo(1L);
-    assertThat(askList.get(0).getTags()).isEqualTo("Reversing");
-    assertThat(askList.get(0).getCreatedDate()).isEqualTo(dateTime);
+    assertThat(askList.get(1).getTags()).isEqualTo("Reversing");
+    assertThat(askList.get(1).getCreatedDate()).isEqualTo(dateTime);
+
+    //list
 
 
 }
