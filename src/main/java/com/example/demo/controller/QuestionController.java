@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.List;
@@ -47,6 +49,18 @@ public class QuestionController {
         List<Ask> asks = askService.findAsks();
         model.addAttribute("asks", asks);
         return "/questions/questionList";
+    }
+    @GetMapping(value="/questions/{no}")
+    public String detail(Model model , @PathVariable("no") Long no) {
+        Ask ask = askService.findOne(no).get();
+        model.addAttribute("ask", ask);
+        return "/questions/view";
+    }
+    @GetMapping(value="/questions/{no}/edit")
+    public String editForm(Model model, @PathVariable("no") Long no) {
+        Ask ask = askService.findOne(no).get();
+        model.addAttribute("ask", ask);
+        return "/questions/edit";
     }
 
 }

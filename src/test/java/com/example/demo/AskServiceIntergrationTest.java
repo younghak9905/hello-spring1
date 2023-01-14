@@ -47,8 +47,25 @@ void 질문글작성() {
     assertThat(askList.get(1).getTags()).isEqualTo("Reversing");
     assertThat(askList.get(1).getCreatedDate()).isEqualTo(dateTime);
 
-    //list
+    //detail
 
+
+}
+@Test
+void 질문글상세보기() {
+//given
+    Ask ask = new Ask();
+    ask.setContents("리버싱을 알려주세요");
+    ask.setTitle("질문글");
+    //ask.setWriterNo(1L);
+    ask.setTags("Reversing");
+    LocalDateTime dateTime = LocalDateTime.now();
+    ask.setCreatedDate(dateTime);
+    askRepository.save(ask);
+//when
+    Optional<Ask> askList = askRepository.findByNo(1L);
+
+//then
 
 }
 

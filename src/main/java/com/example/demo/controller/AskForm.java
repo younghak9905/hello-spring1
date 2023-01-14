@@ -9,9 +9,10 @@ import java.util.Date;
 import static org.springframework.data.jpa.domain.AbstractAuditable_.createdDate;
 
 public class AskForm {
+
     private String title;
     private String contents;
-   // private Long writerNo;
+    // private Long writerNo;
     private String tags;
     private LocalDateTime createdDate;
 
@@ -48,7 +49,7 @@ public class AskForm {
     }
 
     public LocalDateTime getCreatedDate() {
-        return  LocalDateTime.now();
+        return LocalDateTime.now();
     }
 
 

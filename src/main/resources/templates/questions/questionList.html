@@ -13,8 +13,10 @@
             <tbody>
             //ask list
             <tr th:each="ask : ${asks}">
-                <td th:text="${ask.title}"></td>
-                <td th:text="${ask.contents}"></td>
+                <td>
+                    <a th:text="${ask.title}" th:href="@{'/questions/'+ ${ask.no}}" ></a>
+                </td>
+                                <td th:text="${ask.contents}"></td>
                 <td th:text="${ask.tags}"></td>"
             </tr>
             </tbody>
