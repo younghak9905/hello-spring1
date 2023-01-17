@@ -1,23 +1,38 @@
 package com.example.demo.domain;
 
-import javax.persistence.*;
 
+import lombok.*;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Getter
+@Setter
 @Entity
+@Table(name = "comment")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long no;
+    private Long commentNo;
+@ManyToOne(fetch = FetchType.LAZY)
+@JoinColumn(name = "askNo")
+    private Ask askNo;
+@Column(nullable = false)
+    private String reply;
+@Column(nullable = false)
+    private LocalDateTime replyDate;
 
-    @Column(columnDefinition="TEXT",nullable = false)
-    private String commment;
+    public void update(String reply) {
+        this.reply = reply;
+    }
 
-    private String modifeidDate;
-    @ManyToOne
-    @JoinColumn(name = "ask_no")
-    private Ask posts;
+    public Long getCommentNo;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private Member member;
+    public LocalDateTime getReplyDate;
+
+    //getAskNo
+
 
 }

@@ -13,4 +13,25 @@
     </div>
 
 </th:block>
+<form action="@{'/questions/'+ ${ask.no}}" method="post">
+<div id="comment-write">
+    <input type="text" id="commentContents" placeholder="내용"><br>
+    <button id="comment-write-btn">댓글 등록</button>
+</div>
+</form>
+<div id="comment-area">
+    <table>
+        <thead>
+        <tr>
+         <!--   <th th:text="${comment.comment_No}">댓글번호</th>
+            <th>작성자</th>
+            <th th:text="${comment.reply}">내용</th>
+            <th th:text="${comment.replyDate}"></th>-->
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
 </html>

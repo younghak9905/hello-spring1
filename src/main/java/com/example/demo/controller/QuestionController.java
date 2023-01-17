@@ -1,38 +1,36 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Ask;
-import com.example.demo.repository.AskRepository;
+import com.example.demo.domain.Comment;
+import com.example.demo.dto.AskRequestDto;
+import com.example.demo.dto.AskResponseDto;
+import com.example.demo.dto.CommentResponseDto;
+import com.example.demo.repository.CommentRepository;
 import com.example.demo.service.AskService;
+import com.example.demo.service.CommentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 @Controller
+@RequestMapping("/questions")
+@RequiredArgsConstructor
 public class QuestionController {
     private final AskService askService;
+    private final CommentService commentService;
+    private final CommentRepository commentRepository;
 
 
-
-    @Autowired
-    private QuestionController(AskService askService) {
-        this.askService = askService;
-    }
-
-
-
-
-    @GetMapping(value = "/questions/new")
+    @GetMapping(value = "/new")
     public String createForm() {
-        return "/questions/write";
+        return "/write";
     }
-    @PostMapping(value="/questions/new")
+    @PostMapping(value="/new")
     public String create(AskForm form) {
         Ask ask = new Ask();
         ask.setTitle(form.getTitle());
@@ -40,23 +38,31 @@ public class QuestionController {
         //ask.setWriterNo(form.getWriterNo());
         ask.setTags(form.getTags());
         ask.setCreatedDate(form.getCreatedDate());
-       askService.write(ask);
+        askService.write(ask);
 
         return "redirect:/questions";
     }
-    @GetMapping(value="/questions")
+    @GetMapping(value="")
     public String list(Model model) {
         List<Ask> asks = askService.findAsks();
         model.addAttribute("asks", asks);
         return "/questions/questionList";
     }
-    @GetMapping(value="/questions/{no}")
+    @GetMapping(value="/{no}")
     public String detail(Model model , @PathVariable("no") Long no) {
         Ask ask = askService.findOne(no).get();
-        model.addAttribute("ask", ask);
-        return "/questions/view";
+/*        List<Comment> comment = commentService.findCommentsByAskNo(no);
+
+
+      if(comment!=null && !comment.isEmpty()) {
+          model.addAttribute("comment", comment);
+      }*/
+
+      model.addAttribute("ask",ask);
+
+      return "/questions/view";
     }
-    @GetMapping(value="/questions/{no}/edit")
+    @GetMapping(value="/{no}/edit")
     public String editForm(Model model, @PathVariable("no") Long no) {
         Ask ask = askService.findOne(no).get();
         model.addAttribute("ask", ask);

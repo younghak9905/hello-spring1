@@ -2,8 +2,13 @@ package com.example.demo.service;
 
 import com.example.demo.controller.AskForm;
 import com.example.demo.domain.Ask;
+import com.example.demo.dto.AskRequestDto;
+import com.example.demo.dto.AskResponseDto;
 import com.example.demo.repository.AskRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -18,11 +23,13 @@ public AskService(AskRepository askRepository) {
         this.askRepository = askRepository;
     }
 
-    public void write(Ask ask) {
+    public Long write(Ask ask) {
 
         askRepository.save(ask);
+        return ask.getNo();
 
     }
+
 
 
     public List<Ask> findAsks() {
@@ -33,4 +40,8 @@ public AskService(AskRepository askRepository) {
     }
 
 
+    public AskResponseDto findAsk(Long no) {
+        Ask ask = askRepository.findByNo(no).get();
+        return new AskResponseDto(ask);
+    }
 }
