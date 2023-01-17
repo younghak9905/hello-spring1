@@ -6,18 +6,19 @@ import lombok.Getter;
 import net.bytebuddy.asm.Advice;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 public class CommentResponseDto {
     private Long commentNo;
     private String reply;
     private Long askNo;
-    private LocalDateTime replyDate = LocalDateTime.now();
-
+    private String replyDate=LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     public CommentResponseDto(Comment comment) {
-        this.commentNo = comment.getCommentNo;
+        this.commentNo = comment.getCommentNo();
         this.reply = comment.getReply();
-        this.askNo = comment.getAskNo().getNo();
-        this.replyDate = comment.getReplyDate;
+        this.replyDate = comment.getReplyDate();
+        this.askNo = comment.getAsk().getNo();
+
     }
 }

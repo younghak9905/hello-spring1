@@ -18,17 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 public class CommentController {
 
-    @Autowired
-    private CommentRepository commentRepository;
-    @Autowired
-    private AskRepository askRepository;
+   @Autowired
+    private final CommentService commentService;
     @PostMapping("/questions/{no}/comments")
-    public String save(@PathVariable("no") Long no, CommentForm commentForm) {
-        Comment comment = new Comment();
-        comment.setReply(commentForm.getReply());
-        comment.setAskNo(commentForm.getAskNo(no));
-        comment.setReplyDate(commentForm.getReplyDate());
-        commentRepository.save(comment);
+    public String save(@PathVariable("no") Long no,CommentRequestDto dto) {
+
+        commentService.save(dto,no);
         return "redirect:/questions/{no}";
 
 

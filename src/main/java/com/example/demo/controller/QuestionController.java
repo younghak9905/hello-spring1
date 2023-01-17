@@ -28,21 +28,15 @@ public class QuestionController {
 
     @GetMapping(value = "/new")
     public String createForm() {
-        return "/write";
+        return "/questions/write";
     }
-    @PostMapping(value="/new")
-    public String create(AskForm form) {
-        Ask ask = new Ask();
-        ask.setTitle(form.getTitle());
-        ask.setContents(form.getContents());
-        //ask.setWriterNo(form.getWriterNo());
-        ask.setTags(form.getTags());
-        ask.setCreatedDate(form.getCreatedDate());
-        askService.write(ask);
+    @PostMapping(value="/new/questionList")
+    public String create(AskRequestDto requestDto) {
+        askService.write(requestDto);
+       return "redirect:/questions/questionList";
+    }
 
-        return "redirect:/questions";
-    }
-    @GetMapping(value="")
+    @GetMapping(value="/questionList")
     public String list(Model model) {
         List<Ask> asks = askService.findAsks();
         model.addAttribute("asks", asks);
@@ -50,15 +44,15 @@ public class QuestionController {
     }
     @GetMapping(value="/{no}")
     public String detail(Model model , @PathVariable("no") Long no) {
-        Ask ask = askService.findOne(no).get();
-/*        List<Comment> comment = commentService.findCommentsByAskNo(no);
+        AskResponseDto ask = askService.findAsk(no);
+        List<CommentResponseDto> comments = ask.getComments();
 
 
-      if(comment!=null && !comment.isEmpty()) {
-          model.addAttribute("comment", comment);
-      }*/
+      if(comments!=null && !comments.isEmpty()) {
+          model.addAttribute("comment", comments);
+      }
 
-      model.addAttribute("ask",ask);
+      model.addAttribute("asks",ask);
 
       return "/questions/view";
     }

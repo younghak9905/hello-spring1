@@ -4,6 +4,8 @@ import lombok.*;
 import com.example.demo.domain.Comment;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,15 +13,15 @@ import java.time.LocalDateTime;
 public class CommentRequestDto {
     private Long commentNo;
     private String reply;
-    private Ask askNo;
-    private LocalDateTime replyDate = LocalDateTime.now();
+    private Ask ask;
+    private String replyDate=LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
     public Comment toEntity() {
         Comment comments = Comment.builder()
                 .commentNo(commentNo)
                 .reply(reply)
-                .askNo(askNo)
                 .replyDate(replyDate)
+                .ask(ask)
                 .build();
         return comments;
 

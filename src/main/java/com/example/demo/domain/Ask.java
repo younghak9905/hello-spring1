@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @Builder
 @Entity
-public class Ask {
+public class Ask extends TimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
@@ -27,11 +27,9 @@ public class Ask {
    // private Long writerNo;
     @Column(nullable = false)
     private String tags;
-    @CreatedDate
-    @Column(nullable = false)
-    private LocalDateTime createdDate;
 
-    @OneToMany(mappedBy = "askNo", fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "ask", fetch = FetchType.LAZY)
     @OrderBy("commentNo asc")
     private List<Comment> comment = Collections.emptyList();
 

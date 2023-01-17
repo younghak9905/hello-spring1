@@ -61,7 +61,7 @@ this.em = em;
 
     @Override
     public List<Comment> findAllByAskNo(Long askNo) {
-        return em.createQuery("select c from Comment c, Ask a where c.askNo = :askNo", Comment.class)
+        return em.createQuery("select c from Comment c, Ask a where c.ask.no = :askNo", Comment.class)
                 .setParameter("askNo", askNo)
                 .getResultList();
     }

@@ -23,7 +23,8 @@ public AskService(AskRepository askRepository) {
         this.askRepository = askRepository;
     }
 
-    public Long write(Ask ask) {
+    public Long write(AskRequestDto dto) {
+    Ask ask = dto.toEntity();
 
         askRepository.save(ask);
         return ask.getNo();
@@ -44,4 +45,7 @@ public AskService(AskRepository askRepository) {
         Ask ask = askRepository.findByNo(no).get();
         return new AskResponseDto(ask);
     }
+
+
+
 }

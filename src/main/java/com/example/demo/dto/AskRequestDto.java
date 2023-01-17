@@ -16,13 +16,15 @@ public class AskRequestDto {
     private Long no;
     private String title;
     private String contents;
-    private LocalDateTime createdDate;
+    private String createdDate;
+
+    private String tags;
     public Ask toEntity() {
         Ask ask = Ask.builder()
                 .no(no)
                 .title(title)
                 .contents(contents)
-                .createdDate(createdDate)
+                .tags(tags)
                 .build();
         return ask;
     }

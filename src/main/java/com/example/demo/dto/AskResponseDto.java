@@ -16,7 +16,7 @@ public class AskResponseDto {
     private String title;
     private String contents;
     private String tags;
-    private LocalDateTime  createdDate;
+    private String  createdDate;
 
     private List<CommentResponseDto> comments;
 //Entity->Dto
@@ -25,7 +25,6 @@ public class AskResponseDto {
         this.title = entity.getTitle();
         this.contents = entity.getContents();
         this.tags = entity.getTags();
-        this.createdDate = entity.getCreatedDate();
         this.comments = entity.getComment().stream()
                 .map(CommentResponseDto::new)
                 .collect(Collectors.toList());

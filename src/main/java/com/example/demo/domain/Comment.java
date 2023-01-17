@@ -12,25 +12,25 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "comment")
-public class Comment {
+public class Comment{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "comment_no")
     private Long commentNo;
-@ManyToOne(fetch = FetchType.LAZY)
-@JoinColumn(name = "askNo")
-    private Ask askNo;
-@Column(nullable = false)
+
+    @Column(nullable = false)
     private String reply;
-@Column(nullable = false)
-    private LocalDateTime replyDate;
 
-    public void update(String reply) {
-        this.reply = reply;
-    }
+    @Column(name="reply_Date")
+    private String replyDate;
 
-    public Long getCommentNo;
+@ManyToOne(fetch = FetchType.LAZY)
+@JoinColumn(name = "ask_No")
+    private Ask ask;
 
-    public LocalDateTime getReplyDate;
+
+
+
 
     //getAskNo
 
