@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Member;
+import com.example.demo.dto.MemberRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,15 +34,8 @@ public class MemberController {
     }
 
     @PostMapping(value ="/new")
-    public String create(MemberForm form) {
-        Member member = new Member();
-        member.setName(form.getName());
-        member.setEmail(form.getEmail());
-        member.setPassword(form.getPassword());
-        member.setId(form.getId());
-        member.setGitHub(form.getGitHub());
-        member.setBlog(form.getBlog());
-        memberService.join(member);
+    public String create(MemberRequestDto requestDto) {
+        memberService.join(requestDto);
         return "redirect:/";
     }
 }

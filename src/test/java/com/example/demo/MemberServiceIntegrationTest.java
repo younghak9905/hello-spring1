@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.domain.Member;
+import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.MemberService;
 import org.junit.jupiter.api.Test;
@@ -28,11 +29,11 @@ class MemberServiceIntegrationTest {
         member.setEmail("yeong@naver.com");
         member.setPassword("1234");
         member.setBlog("https://blog.naver.com/0hak");
-        member.setGitHub("https://github.com/younghak9905/hello-spring1.git");
+        member.setGithub("https://github.com/younghak9905/hello-spring1.git");
 
 
         //when
-        Long saveNo = memberService.join(member);
+        Long saveNo = memberService.join(MemberRequestDto.builder().build());
         //then
 
         Member findMember = memberRepository.findByNo(saveNo).get();
@@ -48,7 +49,7 @@ class MemberServiceIntegrationTest {
         member1.setEmail("yeong@naver.com");
         member1.setPassword("1234");
         member1.setBlog("https://blog.naver.com/0hak");
-        member1.setGitHub("https://github.com/younghak9905/hello-spring1.git");
+        member1.setGithub("https://github.com/younghak9905/hello-spring1.git");
 
         Member member2 = new Member();
 
@@ -56,10 +57,10 @@ class MemberServiceIntegrationTest {
         member2.setEmail("yeong@naver.com");
         member2.setPassword("1234");
         member2.setBlog("https://blog.naver.com/0hak");
-        member2.setGitHub("https://github.com/younghak9905/hello-spring1.git");
+        member2.setGithub("https://github.com/younghak9905/hello-spring1.git");
         //when
-        memberService.join(member1);
-        IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
+        memberService.join(MemberRequestDto.builder().build());
+        IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(MemberRequestDto.builder().build()));
         assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
 
         //then

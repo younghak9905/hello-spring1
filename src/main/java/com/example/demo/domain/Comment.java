@@ -32,7 +32,7 @@ public class Comment{
 
 
 
-    //getAskNo
+
 
 
 }

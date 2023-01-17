@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.Member;
+import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.repository.MemberRepository;
 import org.springframework.stereotype.Service;import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +16,7 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public Long join(Member member) {
+  /*  public Long join(Member member) {
         //같은 id 있는 중복 회원 X
         validateDuplicateMember(member);
 
@@ -23,7 +24,7 @@ public class MemberService {
         memberRepository.save(member);
 
         return member.getNo();
-    }
+    }*/
 
     public void validateDuplicateMember(Member member) {
         memberRepository.findById(member.getId())
@@ -31,7 +32,10 @@ public class MemberService {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });
     }
-
+    public Long join(MemberRequestDto requestDto) {
+        validateDuplicateMember(requestDto.toEntity());
+        return memberRepository.save(requestDto.toEntity()).getNo();
+    }
 
 
      //전체 회원 조회

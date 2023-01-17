@@ -116,6 +116,7 @@ public class JpaAskRepository implements AskRepository {
     @Override
     public void deleteById(Long aLong) {
 
+
     }
 
     @Override

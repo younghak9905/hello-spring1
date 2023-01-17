@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 public class CommentController {
 
-   @Autowired
+
     private final CommentService commentService;
     @PostMapping("/questions/{no}/comments")
     public String save(@PathVariable("no") Long no,CommentRequestDto dto) {
