@@ -18,7 +18,7 @@ public class CommentRequestDto {
 
     public Comment toEntity() {
         Comment comments = Comment.builder()
-                .commentNo(commentNo)
+
                 .reply(reply)
                 .replyDate(replyDate)
                 .ask(ask)
@@ -27,4 +27,7 @@ public class CommentRequestDto {
 
 
     }
+
+
+
 }

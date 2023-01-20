@@ -19,7 +19,10 @@ public class CommentService {
     private final AskRepository askRepository;
     @Transactional
     public Long save(CommentRequestDto dto,Long no) {
-        Ask ask = askRepository.findByNo(no).get();
+
+        Ask ask = askRepository.findByNo(no).orElseThrow(
+                () -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + no)
+        );
         dto.setAsk(ask);
         Comment comment = dto.toEntity();
         commentRepository.save(comment);

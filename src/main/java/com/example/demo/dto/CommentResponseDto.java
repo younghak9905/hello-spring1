@@ -12,13 +12,13 @@ import java.time.format.DateTimeFormatter;
 public class CommentResponseDto {
     private Long commentNo;
     private String reply;
-    private Long askNo;
+    private Ask askNo;
     private String replyDate=LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     public CommentResponseDto(Comment comment) {
-        this.commentNo = comment.getCommentNo();
+
         this.reply = comment.getReply();
         this.replyDate = comment.getReplyDate();
-        this.askNo = comment.getAsk().getNo();
+        this.askNo = comment.getAsk();
 
     }
 }

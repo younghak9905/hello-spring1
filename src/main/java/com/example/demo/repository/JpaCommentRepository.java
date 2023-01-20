@@ -24,6 +24,8 @@ this.em = em;
 
     }
 
+
+
     @Override
     public Optional<Comment> findByCommentNo(Long commentNo) {
         Comment comment = em.find(Comment.class, commentNo);

@@ -12,7 +12,7 @@ public interface AskRepository extends JpaRepository<Ask, Long> {
 
     Ask save(Ask ask);
 
-    Optional<Ask> findByNo(Long no);
+   Optional<Ask> findByNo(Long no);
 
     Optional<Ask> findByTitle(String title);
 

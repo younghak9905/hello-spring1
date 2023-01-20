@@ -1,0 +1,49 @@
+up-button{
+    max-width: 28px;
+    height: 44px;
+    flex: 10 0 23px;
+    padding: 0;
+    padding: 12px 0 0 0;
+    text-align: center;
+    cursor: pointer;
+}
+.button-bar{
+    clear: both;
+    background-color: transparent;
+    margin: 10px 0 0 0;
+    padding: 0;
+    width: 100%;
+    border: 1px solid hsl(210,8%,65%);
+    border-bottom: 0;
+    min-height: 44px;
+    overflow: hidden;
+    z-index: 2;
+    position: relative;
+}
+.answer-box{
+
+    width: 100%;
+    box-sizing: border-box;
+
+}
+.answer-btn-row{
+    padding: 0 4px 0 8px;
+    margin: 0;
+    display: flex;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    height: 44px;
+    border-bottom: 1px solid hsl(210,8%,65%);
+}
+ul{
+    list-style-type: disc;
+}
+body{
+    background-color: hsl(210,8%,95%);
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: hsl(210,8%,20%);
+    margin: 0;
+    padding: 0;
+}

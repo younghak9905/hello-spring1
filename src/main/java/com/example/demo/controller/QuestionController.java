@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/questions")
+@RequestMapping(value = "/questions", method = {RequestMethod.GET, RequestMethod.POST})
 @RequiredArgsConstructor
 public class QuestionController {
     private final AskService askService;
@@ -54,7 +54,7 @@ public class QuestionController {
 
       model.addAttribute("asks",ask);
 
-      return "/questions/view";
+      return "questions/view";
     }
     @GetMapping(value="/{no}/edit")
     public String editForm(Model model, @PathVariable("no") Long no) {

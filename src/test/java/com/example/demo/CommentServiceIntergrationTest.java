@@ -34,7 +34,7 @@ public class CommentServiceIntergrationTest {
         //given
         Comment comment = new Comment();
         comment.setReply("댓글입니다");
-       comment.setReplyDate(LocalDateTime.now());
+
 
         commentRepository.save(comment);
         //when
@@ -42,7 +42,7 @@ public class CommentServiceIntergrationTest {
         //then
         assertThat(commentList.get(0).getReply()).isEqualTo("댓글입니다");
 
-        assertThat(commentList.get(0).getAskNo()).isEqualTo(1L);
+
     }
 
 

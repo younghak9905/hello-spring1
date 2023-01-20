@@ -4,7 +4,7 @@ package com.example.demo.domain;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

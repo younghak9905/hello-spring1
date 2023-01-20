@@ -24,13 +24,13 @@ public class MemberController {
 
     @GetMapping(value="/new")
     public String createForm() {
-        return "members/createMemberForm";
+        return "/members/createMemberForm";
     }
     @GetMapping(value = "")
     public String list(Model model) {
         List<Member> members = memberService.findMembers();
         model.addAttribute("members", members);
-        return "members/memberList";
+        return "/members/memberList";
     }
 
     @PostMapping(value ="/new")

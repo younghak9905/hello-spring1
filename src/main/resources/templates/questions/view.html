@@ -1,37 +1,85 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+<link rel="stylesheet" href="/static/css/board.css">
 <th:block layout:fragment="title">
     <title>상세 페이지</title>
 </th:block>
+<body>
 <th:block layout:fragment="content">
     <div class="container">
         <div>
+
             <h1 th:text="${asks.title}"></h1>
             <p th:text="${asks.contents}"></p>
+            <p th:text="${asks.no}"></p>
             <p th:text="${asks.tags}"></p>
+
+
         </div>
     </div>
 
 </th:block>
-<form action="@{'/questions/'+ ${ask.no}/comment}" method="post">
-<div id="comment-write">
-    <input type="text" id="reply" placeholder="내용"><br>
-    <button id="comment-write-btn">댓글 등록</button>
+//save comment
+
+<br />
+<div class="card">
+    <div class="card-header">comment list</div>
+    <ul calss = "list-group">
+        <li class = "list-group-item d-flex">
+
+
+
+                <tr th:each="comment: ${comment}">
+                    <textarea  th:text="${comment.reply}" th:rows="4">reply</textarea>
+                    <div class="d-flex">
+                        <div> writer : gongchamcham &nbsp;</div>
+                    </div>
+                    <div class = "card-footer">
+                        <button type="button" class="btn btn-primary">modify</button>
+                        <button type="button" class="btn btn-primary">delete</button>
+                    </div>
+                </tr>
+
+
+        </li>
+    </ul>
+<div class="answer-box">
+    <div id="answer-btn-bar" class="btn-group">
+        <ul id="answer-btn-row" class="answer-btn-row">
+            <li class="up-button" id="bold-button" title="Strong <strong> Ctrl+B">
+                <span style="background-position: 0px 0px;">B</span></li>
+            <li class="up-button" id="italic-button" title="Emphasis <em> Ctrl+I">
+                <span style="background-position: -20px 0px;">I</span></li>
+            <li class="up-button" id="link-button" title="Hyperlink <a> Ctrl+L">
+                <span style="background-position: -40px 0px;">L</span></li>
+            <li class="up-button" id="quote-button" title="Blockquote <blockquote> Ctrl+Q">
+                <span style="background-position: -60px 0px;">"</span>
+            </li>
+            <li class="up-button" id="code-button" title="Code Sample <pre><code> Ctrl+K">
+                <span style="background-position: -80px 0px;">{}</span>
+            </li>
+            <li class="up-button" id="image-button" title="Image <img> Ctrl+G">
+                <span style="background-position: -100px 0px;"></span>
+            </li>
+            <li class="up-button" id="snippet-button" title="JavaScript/HTML/CSS snippet Ctrl-M">
+                <span></span>
+            </li>
+
+        </ul>
+
+    </div>
+    <form th:action="@{|/questions/comment/${asks.no}|}" method="post">
+        <div id="comment-write">
+            <textarea id="wmd-input" name="reply" class="wmd-input s-input bar0 js-post-body-field processed" data-editor-type="wmd" data-post-type-id="2" cols="92" rows="15" aria-labelledby="your-answer-header" tabindex="101" data-min-length=""></textarea>
+            <button type="submit">댓글 등록</button>
+        </div>
+    </form>
+
 </div>
-</form>
-<div id="comment-area">
-    <table>
-        <thead>
-        <tr th:each="comment: ${comment}">
-          <th th:text="${comment.commentNo}">댓글번호</th>
-            <th>작성자</th>
-            <th th:text="${comment.reply}">내용</th>
-            <th th:text="${comment.replyDate}"></th>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
 </div>
+
+
+</th:block>
+</body>
 
 </html>

@@ -34,7 +34,7 @@ void 질문글작성() {
     //ask.setWriterNo(1L);
     ask.setTags("Reversing");
     LocalDateTime dateTime = LocalDateTime.now();
-    ask.setCreatedDate(dateTime);
+    //ask.setCreatedDate(dateTime);
     askRepository.save(ask);
 
 
@@ -60,7 +60,6 @@ void 질문글상세보기() {
     //ask.setWriterNo(1L);
     ask.setTags("Reversing");
     LocalDateTime dateTime = LocalDateTime.now();
-    ask.setCreatedDate(dateTime);
     askRepository.save(ask);
 //when
     Optional<Ask> askList = askRepository.findByNo(1L);
