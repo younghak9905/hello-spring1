@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.domain.Ask;
 import com.example.demo.domain.Comment;
 import com.example.demo.dto.CommentRequestDto;
+import com.example.demo.dto.CommentResponseDto;
 import com.example.demo.repository.AskRepository;
 import com.example.demo.repository.CommentRepository;
 
@@ -36,11 +37,20 @@ public class CommentService {
 
 
     @Transactional
-    public void delete(Long commentNo) {
-        Comment comment = commentRepository.findByCommentNo(commentNo).orElseThrow(
+    public Long delete(Long commentNo) {
+        Comment parent = commentRepository.findByCommentNo(commentNo).orElseThrow(
                 () -> new IllegalArgumentException("해당 댓글이 없습니다. no=" + commentNo)
         );
-        commentRepository.delete(comment);
+
+        List<Comment> comments = commentRepository.findByCommentGroup(commentNo);
+        if(comments.size() != 0){
+            for(Comment comment : comments){
+                commentRepository.delete(comment);
+            }
+        }
+
+        commentRepository.delete(parent);
+        return parent.getAsk().getNo();
     }
 
 
@@ -67,6 +77,17 @@ public class CommentService {
         );
         comment.update(commentNo);
     }
+
+    @Transactional
+    public Long selected(Long commentNo) {
+        Comment comment = commentRepository.findByCommentNo(commentNo).orElseThrow(
+                () -> new IllegalArgumentException("해당 댓글이 없습니다. no=" + commentNo)
+        );
+        comment.setSelected(1L);
+        return comment.getAsk().getNo();
+    }
+
+
 
 
 }

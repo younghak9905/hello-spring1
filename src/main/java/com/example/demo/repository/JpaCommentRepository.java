@@ -32,6 +32,13 @@ this.em = em;
         return Optional.ofNullable(comment);
     }
 
+    @Override
+    public List<Comment> findByCommentGroup(Long commentGroup) {
+        return em.createQuery("select c from Comment c where c.commentGroup = :commentGroup", Comment.class)
+                .setParameter("commentGroup", commentGroup)
+                .getResultList();
+    }
+
    /* @Override
     public Comment update(Long commentNo, String reply) {
         Comment comment = em.find(Comment.class, commentNo);
@@ -75,6 +82,11 @@ this.em = em;
     }
 
     @Override
+    public List<Comment> findAllByCommentGroup(Long commentGroup) {
+        return null;
+    }
+
+    @Override
     public List<Comment> findAll() {
         return em.createQuery("select c from Comment c", Comment.class)
                 .getResultList();
@@ -108,7 +120,6 @@ this.em = em;
     @Override//delete comment
     public void delete(Comment entity) {
         em.remove(entity);
-
     }
 
     @Override

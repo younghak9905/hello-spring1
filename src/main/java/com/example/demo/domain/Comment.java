@@ -30,6 +30,9 @@ public class Comment{
     @Column(nullable = true)
     private Long depth;
 
+    @Column(name="selected")
+    private Long selected;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
 @JoinColumn(name = "ask_No")

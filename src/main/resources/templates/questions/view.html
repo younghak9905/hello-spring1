@@ -9,12 +9,46 @@
         padding-left: 20px;
         border-left: 1px solid #ddd;
     }
+    textarea {
+        padding: 10px;
+        border-radius: 5px;
+        border: 2px solid #f2f2f2;
+        background-color: #f2f2f2;
+    }
+
+    .selected {
+        border: 2px solid yellow;
+        padding: 10px;
+    }
+    .left{
+        grid-column: 1/3;
+    }
+    .center {
+
+        grid-column: 2 / 3; /* spans the second column */
+    }
+    .right {
+        grid-column: 3/ 3; /* spans the third column */
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: 20% 55% 25%; /* sets the width of each column */
+    }
+    .btn-group {
+        display: flex;
+    }
+    .btn-group button, .btn-group form {
+        display: inline-block;
+    }
 
 </style>
 <th:block layout:fragment="title">
     <title>상세 페이지</title>
 </th:block>
 <body>
+<div class="grid-container">
+<div class="left"></div>
+<div class="center">
 <th:block layout:fragment="content">
     <div class="container">
         <div>
@@ -36,6 +70,15 @@
     <div class="card-header">comment list</div>
     <ul calss="list-group">
         <li class="list-group-item d-flex">
+            <span th:each="comment: ${comment}" th:if="${comment.selected==1}" >
+                <div id="comment_box" class="selected">
+                  <p>writer : gongchamcham </p>
+                <p th:text="${comment.commentNo}"></p>
+                    <p th:text="${comment.reply}" th:rows="4"></p>
+                </div>
+                  <hr>
+                <br><br>
+            </span>
 
 
 
@@ -47,11 +90,20 @@
                             <div> writer : gongchamcham" </div>
                             <p th:text="${comment.commentNo}"></p>
 
-                    <textarea th:text="${comment.reply}" th:rows="4">reply</textarea>
-                    <div class="card-footer">
+                    <p th:text="${comment.reply}" th:rows="4"></p>
+                    <div class="btn-group">
                         <button type="button" class="btn btn-primary">modify</button>
-                        <button type="button" class="btn btn-primary">delete</button>
-                        <form th:action="@{|/questions/comment/${asks.no}/reply|}" method="post">
+                    <form th:action="@{|/questions/comment/delete/${comment.commentNo}|}">
+
+                        <button type="submit" class="btn btn-primary">delete</button>
+                    </form>
+
+
+                        <form th:action="@{|/questions/comment/selected/${comment.commentNo}|}" method="post">
+                                <button type="submit" class="btn btn-primary">selected</button>
+                        </form>
+
+                         <form th:action="@{|/questions/comment/${asks.no}/reply|}" method="post">
                             <input type="text" name="reply" placeholder="reply"/>
                             <input type="hidden" name="commentGroup" th:value="${comment.commentNo}"/>
                             <button type="submit" class="btn btn-primary">reply</button>
@@ -63,22 +115,30 @@
                     <div class="reply">
                          <div> writer : gongchamcham</div>
                             <p th:text="${reply.commentNo}"></p>
-                        <textarea th:text="${reply.reply}" th:rows="4" >reply </textarea>
+                        <p th:text="${reply.reply}" th:rows="4" > </p>
 
 
 
                         <div class="card-footer">
                             <button type="button" class="btn btn-primary">modify</button>
-                            <button type="button" class="btn btn-primary">delete</button>
-                            <form th:action="@{|/questions/comment/${asks.no}/reply|}" method="post">
+                             <form th:action="@{|/questions/comment/delete/${reply.commentNo}|}">
+                                 <button type="submit" class="btn btn-primary">delete</button>
+                             </form>
+
+                            <form th:action="@{|/questions/comment/selected/${reply.commentNo}|}" method="post">
+                                <button type="submit" class="btn btn-primary">selected</button>
+                            </form>
+
+                             <form th:action="@{|/questions/comment/${asks.no}/reply|}" method="post">
                                 <input type="text" name="reply" placeholder="reply"/>
                                 <input type="hidden" name="commentGroup" th:value="${reply.commentNo}"/>
                                 <button type="submit" class="btn btn-primary">reply</button>
-                                </form>
+                            </form>
                         </div>
                     </div>
-                     </span>
 
+                     </span>
+                      <hr>
             </span>
 
 
@@ -122,6 +182,9 @@
 </div>
 
 
+</div>
+</div>
+<div class="right"></div>
 </div>
 </body>
 

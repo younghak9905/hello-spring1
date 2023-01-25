@@ -16,6 +16,8 @@ public class CommentResponseDto {
 
     private Long commentGroup=0L;
     private Long depth=0L;
+
+    private Long selected=0L;
     private String replyDate=LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     public CommentResponseDto(Comment comment) {
         this.commentNo = comment.getCommentNo();
@@ -24,6 +26,6 @@ public class CommentResponseDto {
         this.askNo = comment.getAsk();
         this.commentGroup = comment.getCommentGroup();
         this.depth = comment.getDepth();
-
+        this.selected = comment.getSelected();
     }
 }

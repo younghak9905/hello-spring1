@@ -17,6 +17,8 @@ public class CommentRequestDto {
     private String replyDate=LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     private Long commentGroup=0L;
     private Long depth=0L;
+
+    private Long selected=0L;
     public Comment toEntity() {
         Comment comments = Comment.builder()
                 .commentNo(commentNo)
@@ -25,6 +27,7 @@ public class CommentRequestDto {
                 .ask(ask)
                 .commentGroup(commentGroup)
                 .depth(depth)
+                .selected(selected)
                 .build();
         return comments;
 

@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -41,6 +42,19 @@ AskRepository askRepository;
     @PostMapping("/comment/{no}/reply")
     public String reply(CommentRequestDto dto,@PathVariable("no") Long no){
         commentService.reply(dto,no);
+        return "redirect:/questions/"+no;
+    }
+
+    @PostMapping("comment/selected/{commentNo}")
+    public String selected(@PathVariable("commentNo") Long commentNo){
+        Long no = commentService.selected(commentNo);
+        return "redirect:/questions/"+no;
+    }
+//delete parent comment
+    @PostMapping("comment/delete/{commentNo}")
+    public String delete(@PathVariable("commentNo") Long commentNo){
+
+        Long no = commentService.delete(commentNo);
         return "redirect:/questions/"+no;
     }
 
