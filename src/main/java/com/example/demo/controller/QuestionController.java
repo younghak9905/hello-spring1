@@ -46,11 +46,21 @@ public class QuestionController {
     public String detail(Model model , @PathVariable("no") Long no) {
         AskResponseDto ask = askService.findAsk(no);
         List<CommentResponseDto> comments = ask.getComments();
+        List<CommentResponseDto> reply = ask.getComments();
 
 
       if(comments!=null && !comments.isEmpty()) {
           model.addAttribute("comment", comments);
+          //comments.depth가 1 이상인 것만 뽑아서 보내기
+
+            if(reply!=null && !reply.isEmpty()) {
+                model.addAttribute("reply",reply);
+            }
+
+
       }
+
+
 
       model.addAttribute("asks",ask);
 

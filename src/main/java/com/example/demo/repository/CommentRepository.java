@@ -32,5 +32,8 @@ public interface CommentRepository  extends JpaRepository<Comment, Long> {
 
     List<Comment> findAllByAskNo(Long no);
 
+   //u Comment update(Long commentNo, String reply
+
+
     //글쓰기
 }

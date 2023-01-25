@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
+
 
 @RequiredArgsConstructor
 @Controller
@@ -23,13 +25,24 @@ public class CommentController {
 
 AskRepository askRepository;
     private final CommentService commentService;
+    private final CommentRepository commentRepository;
+
     @PostMapping("/comment/{no}")
     public String save(CommentRequestDto dto,@PathVariable("no") Long no){
 
         commentService.save(dto,no);
+
+
         return "redirect:/questions/"+no;
-
-
     }
+
+
+
+    @PostMapping("/comment/{no}/reply")
+    public String reply(CommentRequestDto dto,@PathVariable("no") Long no){
+        commentService.reply(dto,no);
+        return "redirect:/questions/"+no;
+    }
+
 }
 

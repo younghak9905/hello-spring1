@@ -1,6 +1,16 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/basic">
 <link rel="stylesheet" href="/static/css/board.css">
+
+<style>
+    .reply {
+        margin-left: 20px;
+        padding-left: 20px;
+        border-left: 1px solid #ddd;
+    }
+
+</style>
 <th:block layout:fragment="title">
     <title>상세 페이지</title>
 </th:block>
@@ -21,28 +31,59 @@
 </th:block>
 //save comment
 
-<br />
+<br/>
 <div class="card">
     <div class="card-header">comment list</div>
-    <ul calss = "list-group">
-        <li class = "list-group-item d-flex">
+    <ul calss="list-group">
+        <li class="list-group-item d-flex">
 
 
 
-                <tr th:each="comment: ${comment}">
-                    <textarea  th:text="${comment.reply}" th:rows="4">reply</textarea>
-                    <div class="d-flex">
-                        <div> writer : gongchamcham &nbsp;</div>
-                    </div>
-                    <div class = "card-footer">
+                <span th:each="comment: ${comment}" th:if="${comment.depth==0}">
+
+
+
+
+                            <div> writer : gongchamcham" </div>
+                            <p th:text="${comment.commentNo}"></p>
+
+                    <textarea th:text="${comment.reply}" th:rows="4">reply</textarea>
+                    <div class="card-footer">
                         <button type="button" class="btn btn-primary">modify</button>
                         <button type="button" class="btn btn-primary">delete</button>
+                        <form th:action="@{|/questions/comment/${asks.no}/reply|}" method="post">
+                            <input type="text" name="reply" placeholder="reply"/>
+                            <input type="hidden" name="commentGroup" th:value="${comment.commentNo}"/>
+                            <button type="submit" class="btn btn-primary">reply</button>
+                        </form>
                     </div>
-                </tr>
+
+                    <span th:each="reply: ${reply}" th:if="${reply.commentGroup == comment.commentNo}" class="reply">
+
+                    <div class="reply">
+                         <div> writer : gongchamcham</div>
+                            <p th:text="${reply.commentNo}"></p>
+                        <textarea th:text="${reply.reply}" th:rows="4" >reply </textarea>
 
 
-        </li>
-    </ul>
+
+                        <div class="card-footer">
+                            <button type="button" class="btn btn-primary">modify</button>
+                            <button type="button" class="btn btn-primary">delete</button>
+                            <form th:action="@{|/questions/comment/${asks.no}/reply|}" method="post">
+                                <input type="text" name="reply" placeholder="reply"/>
+                                <input type="hidden" name="commentGroup" th:value="${reply.commentNo}"/>
+                                <button type="submit" class="btn btn-primary">reply</button>
+                                </form>
+                        </div>
+                    </div>
+                     </span>
+
+            </span>
+
+
+</li>
+</ul>
 <div class="answer-box">
     <div id="answer-btn-bar" class="btn-group">
         <ul id="answer-btn-row" class="answer-btn-row">
@@ -70,16 +111,18 @@
     </div>
     <form th:action="@{|/questions/comment/${asks.no}|}" method="post">
         <div id="comment-write">
-            <textarea id="wmd-input" name="reply" class="wmd-input s-input bar0 js-post-body-field processed" data-editor-type="wmd" data-post-type-id="2" cols="92" rows="15" aria-labelledby="your-answer-header" tabindex="101" data-min-length=""></textarea>
+                <textarea id="wmd-input" name="reply" class="wmd-input s-input bar0 js-post-body-field processed"
+                          data-editor-type="wmd" data-post-type-id="2" cols="92" rows="15"
+                          aria-labelledby="your-answer-header" tabindex="101" data-min-length=""></textarea>
+
             <button type="submit">댓글 등록</button>
         </div>
     </form>
 
 </div>
+
+
 </div>
-
-
-</th:block>
 </body>
 
 </html>

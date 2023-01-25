@@ -32,6 +32,12 @@ this.em = em;
         return Optional.ofNullable(comment);
     }
 
+   /* @Override
+    public Comment update(Long commentNo, String reply) {
+        Comment comment = em.find(Comment.class, commentNo);
+        comment.setReply(reply);
+        return comment;
+    }*/
 
     @Override
     public Optional<Comment> findByReply(String reply) {
@@ -99,8 +105,9 @@ this.em = em;
 
     }
 
-    @Override
+    @Override//delete comment
     public void delete(Comment entity) {
+        em.remove(entity);
 
     }
 

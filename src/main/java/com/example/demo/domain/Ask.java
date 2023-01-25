@@ -29,8 +29,10 @@ public class Ask extends TimeEntity{
     private String tags;
 
 
+
+
     @OneToMany(mappedBy = "ask", fetch = FetchType.LAZY)
-    @OrderBy("commentNo asc")
+    @OrderBy("commentGroup Asc, depth Asc, commentNo Asc")
     private List<Comment> comment = Collections.emptyList();
 
 

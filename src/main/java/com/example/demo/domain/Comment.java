@@ -23,15 +23,21 @@ public class Comment{
 
     @Column(name="reply_Date")
     private String replyDate;
+//commentNo=commentGroup
+    @Column(name="comment_group")
+    private Long commentGroup;
 
-@ManyToOne(fetch = FetchType.LAZY)
+    @Column(nullable = true)
+    private Long depth;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
 @JoinColumn(name = "ask_No")
     private Ask ask;
 
-
-
-
-
+    public void update(Long commentGroup) {
+        this.commentGroup = commentGroup;
+    }
 
 
 
