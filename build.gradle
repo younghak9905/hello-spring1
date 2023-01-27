@@ -28,6 +28,9 @@ dependencies {
 	implementation "org.apache.tomcat.embed:tomcat-embed-jasper"
 	runtimeOnly 'com.h2database:h2'
 	implementation 'javax.servlet:jstl'
+	implementation 'org.commonmark:commonmark:0.21.0'
+	implementation 'org.commonmark:commonmark-ext-gfm-tables:0.21.0'
+
 
 
 
@@ -35,6 +38,8 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 }
+
+
 
 tasks.named('test') {
 	useJUnitPlatform()

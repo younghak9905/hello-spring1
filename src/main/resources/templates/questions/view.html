@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="layout/basic">
+      layout:decorate="layout/basic" xmlns:type="http://www.w3.org/1999/xhtml">
 <link rel="stylesheet" href="/static/css/board.css">
 
+
 <style>
+    div {
+        display: block;
+    }
     .reply {
         margin-left: 20px;
         padding-left: 20px;
@@ -14,6 +18,18 @@
         border-radius: 5px;
         border: 2px solid #f2f2f2;
         background-color: #f2f2f2;
+        resize: none;
+    }
+    textarea.wmd-input,textarea#wmd-input{
+        padding: 10px;
+        margin: -1px 0 0;
+        height: 200px;
+        line-height: 1.3;
+        width: 98%;
+
+        -moz-tab-size: 4;
+        -o-tab-size: 4;
+        tab-size: 4;
     }
 
     .selected {
@@ -37,10 +53,51 @@
     .btn-group {
         display: flex;
     }
-    .btn-group button, .btn-group form {
+    .btn-group button, .btn-group form,li {
         display: inline-block;
     }
+    .bottom-nav {
+        display: flex;
+        justify-content: space-between;
+        background-color: #1a1e21;
+        height: auto;
+    }
 
+    code {
+        background-color: #f1f1f1;
+        padding: 0.2em 0.4em;
+        border-radius: 4px;
+    }
+    #answer-btn-bar button {
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+    }
+
+    #answer-btn-bar {
+        clear: both;
+        background-color: transparent;
+        margin: 10px 0 0 0;
+        padding: 0;
+        width: 100%;
+        border: 1px solid hsl(210,8%,75%);
+        border-bottom: 0;
+        min-height: 44px;
+        overflow: hidden;
+        z-index: 2;
+        position: relative;
+    }
+.answer-btn-row
+    {
+    padding: 0 4px 0 8px;
+    margin: 0;
+    display: flex;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    height: 44px;
+    border-bottom: 1px solid hsl(210,8%,75%);
+    }
 </style>
 <th:block layout:fragment="title">
     <title>상세 페이지</title>
@@ -74,7 +131,7 @@
                 <div id="comment_box" class="selected">
                   <p>writer : gongchamcham </p>
                 <p th:text="${comment.commentNo}"></p>
-                    <p th:text="${comment.reply}" th:rows="4"></p>
+                  <p th:utext="${@commonUtil.markdown(comment.reply)}" th:rows="4"></p>
                 </div>
                   <hr>
                 <br><br>
@@ -90,7 +147,7 @@
                             <div> writer : gongchamcham" </div>
                             <p th:text="${comment.commentNo}"></p>
 
-                    <p th:text="${comment.reply}" th:rows="4"></p>
+                     <p th:utext="${@commonUtil.markdown(comment.reply)}" th:rows="4"></p>
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary">modify</button>
                     <form th:action="@{|/questions/comment/delete/${comment.commentNo}|}">
@@ -115,11 +172,11 @@
                     <div class="reply">
                          <div> writer : gongchamcham</div>
                             <p th:text="${reply.commentNo}"></p>
-                        <p th:text="${reply.reply}" th:rows="4" > </p>
+                     <p th:utext="${@commonUtil.markdown(reply.reply)}" th:rows="4"></p>
 
 
 
-                        <div class="card-footer">
+                        <div class="btn-group">
                             <button type="button" class="btn btn-primary">modify</button>
                              <form th:action="@{|/questions/comment/delete/${reply.commentNo}|}">
                                  <button type="submit" class="btn btn-primary">delete</button>
@@ -147,29 +204,31 @@
 <div class="answer-box">
     <div id="answer-btn-bar" class="btn-group">
         <ul id="answer-btn-row" class="answer-btn-row">
-            <li class="up-button" id="bold-button" title="Strong <strong> Ctrl+B">
-                <span style="background-position: 0px 0px;">B</span></li>
-            <li class="up-button" id="italic-button" title="Emphasis <em> Ctrl+I">
-                <span style="background-position: -20px 0px;">I</span></li>
-            <li class="up-button" id="link-button" title="Hyperlink <a> Ctrl+L">
-                <span style="background-position: -40px 0px;">L</span></li>
-            <li class="up-button" id="quote-button" title="Blockquote <blockquote> Ctrl+Q">
+            <button type="button" class="up-button" id="bold-button" title="Strong <strong> Ctrl+B">
+                <span style="background-position: 0px 0px;">B</span></button>
+            <button class="up-button" id="italic-button" title="Emphasis <em> Ctrl+I">
+                <span style="background-position: -20px 0px;">I</span></button>
+            <button class="up-button" id="link-button" title="Hyperlink <a> Ctrl+L">
+                <span style="background-position: -40px 0px;">L</span></button>
+            <button class="up-button" id="quote-button" title="Blockquote <blockquote> Ctrl+Q">
                 <span style="background-position: -60px 0px;">"</span>
-            </li>
-            <li class="up-button" id="code-button" title="Code Sample <pre><code> Ctrl+K">
+            </button>
+            <button class="up-button" id="code-button" title="Code Sample <pre><code> Ctrl+K">
                 <span style="background-position: -80px 0px;">{}</span>
-            </li>
-            <li class="up-button" id="image-button" title="Image <img> Ctrl+G">
-                <span style="background-position: -100px 0px;"></span>
-            </li>
-            <li class="up-button" id="snippet-button" title="JavaScript/HTML/CSS snippet Ctrl-M">
-                <span></span>
-            </li>
+            </button>
+
+            <button class="up-button" id="image-button" title="Image <img> Ctrl+G">
+                <span style="background-position: -100px 0px;">image</span>
+            </button>
+
+            <button class="up-button" id="snippet-button" title="JavaScript/HTML/CSS snippet Ctrl-M">
+                <span>snippet</span>
+            </button>
 
         </ul>
 
     </div>
-    <form th:action="@{|/questions/comment/${asks.no}|}" method="post">
+    <form th:action="@{|/questions/comment/${asks.no}|}" method="post" id="reply-submit">
         <div id="comment-write">
                 <textarea id="wmd-input" name="reply" class="wmd-input s-input bar0 js-post-body-field processed"
                           data-editor-type="wmd" data-post-type-id="2" cols="92" rows="15"
@@ -186,6 +245,80 @@
 </div>
 <div class="right"></div>
 </div>
+
+<div class="bottom-nav">
+<div>
+    <p> k.knock</p>
+    <p> k.knock</p>
+    <p> k.knock</p>
+    <p> k.knock</p>
+    <p> k.knock</p>
+</div>
+
+
+</div>
 </body>
+<script>
+    let markdownText = document.getElementById("wmd-input").value;
+
+    function marked(markdownText) {
+        return "";
+    }
+
+    document.getElementById("wmd-input").innerHTML = marked(markdownText);
+    document.getElementById("bold-button").addEventListener("click", function(){
+        const editor = document.getElementById("wmd-input");
+        const selectedText = editor.value.substring(editor.selectionStart, editor.selectionEnd);
+        const newText = "**bold" + selectedText + "**";
+        editor.value = editor.value.substring(0, editor.selectionStart) + newText + editor.value.substring(editor.selectionEnd);
+    });
+    document.getElementById("italic-button").addEventListener("click", function(){
+        const editor = document.getElementById("wmd-input");
+        const selectedText = editor.value.substring(editor.selectionStart, editor.selectionEnd);
+        const newText = "*italic" + selectedText + "*";
+        editor.value = editor.value.substring(0, editor.selectionStart) + newText + editor.value.substring(editor.selectionEnd);
+    });
+    document.getElementById("link-button").addEventListener("click", function(){
+        let link = prompt("Enter the link here: ", "http://");
+        document.execCommand("createLink", false, link);
+    });
+    document.getElementById("quote-button").addEventListener("click", function(){
+        const editor = document.getElementById("wmd-input");
+        const selectedText = editor.value.substring(editor.selectionStart, editor.selectionEnd);
+        const newText = ">blockquotes" + selectedText;
+        editor.value = editor.value.substring(0, editor.selectionStart) + newText + editor.value.substring(editor.selectionEnd);
+    });
+    document.getElementById("image-button").addEventListener("click", function() {
+        const editor = document.getElementById("wmd-input");
+        const imul = prompt("Enter the image URL: ");
+        const newText = "![image](" + imul + ")";
+        editor.value = editor.value.substring(0, editor.selectionStart) + newText + editor.value.substring(editor.selectionEnd);
+    });
+    document.getElementById("code-button").addEventListener("click", function() {
+        const editor = document.getElementById("wmd-input");
+        const selectedText = editor.value.substring(editor.selectionStart, editor.selectionEnd);
+        const newText = "` <code> " + selectedText + "`";
+        editor.value = editor.value.substring(0, editor.selectionStart) + newText + editor.value.substring(editor.selectionEnd);
+    });
+
+    document.getElementById("reply-submit").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let markdownText = document.getElementById("wmd-input").value;
+
+        function marked(markdownText) {
+            return "";
+        }
+
+        document.getElementById("wmd-input").innerHTML = marked(markdownText);
+        // form submit
+        this.submit();
+    });
+
+
+
+
+
+
+</script>
 
 </html>
