@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.domain.Ask;
+import com.example.demo.domain.Member;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,13 +35,10 @@ public class JpaAskRepository implements AskRepository {
         return Optional.ofNullable(ask);
     }
 
-    @Override
-    public Optional<Ask> findByTitle(String title) {
-        List<Ask> result = em.createQuery("select a from Ask a where a.title = :title", Ask.class)
-                .setParameter("title", title)
-                .getResultList();
-        return result.stream().findAny();
-    }
+
+    //titleContaining
+
+
     @Override
     public Optional<Ask> findByContents(String contents) {
         List<Ask> result = em.createQuery("select a from Ask a where a.contents = :contents", Ask.class)
@@ -62,13 +60,7 @@ public class JpaAskRepository implements AskRepository {
                 .getResultList();
     }
 
-  /*  @Override
-    public Optional<Ask> findByWriterNo(Long writerNo) {
-        List<Ask> result = em.createQuery("select a from Ask a where a.writerNo = :writerNo", Ask.class)
-                .setParameter("writerNo", writerNo)
-                .getResultList();
-        return result.stream().findAny();
-    }*/
+
 
     @Override
     public Optional<Ask> findByTags(String tags) {
@@ -91,6 +83,8 @@ public class JpaAskRepository implements AskRepository {
         return em.createQuery("select a from Ask a", Ask.class)
                 .getResultList();
     }
+
+
 
     @Override
     public List<Ask> findAll(Sort sort) {

@@ -44,10 +44,11 @@ AskRepository askRepository;
         commentService.reply(dto,no);
         return "redirect:/questions/"+no;
     }
-
+//selected only one comment
     @PostMapping("comment/selected/{commentNo}")
     public String selected(@PathVariable("commentNo") Long commentNo){
         Long no = commentService.selected(commentNo);
+
         return "redirect:/questions/"+no;
     }
 //delete parent comment

@@ -46,6 +46,12 @@ public AskService(AskRepository askRepository) {
         return new AskResponseDto(ask);
     }
 
+    public List<Ask> findByTitleContaining(String title) {
+        if(title !=null) {
+            return askRepository.findByTitleContaining(title);
+        }
+        return null;
+    }
 
 
 }

@@ -80,11 +80,20 @@ public class CommentService {
 
     @Transactional
     public Long selected(Long commentNo) {
+
+
         Comment comment = commentRepository.findByCommentNo(commentNo).orElseThrow(
                 () -> new IllegalArgumentException("해당 댓글이 없습니다. no=" + commentNo)
         );
+
+        Long askNo= comment.getAsk().getNo();
+        Comment AlreadySelected = commentRepository.findBySelected(askNo);
+        if(AlreadySelected != null){
+            AlreadySelected.setSelected(0L);
+        }
         comment.setSelected(1L);
-        return comment.getAsk().getNo();
+
+        return askNo;
     }
 
 

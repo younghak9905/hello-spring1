@@ -14,7 +14,8 @@ public interface AskRepository extends JpaRepository<Ask, Long> {
 
    Optional<Ask> findByNo(Long no);
 
-    Optional<Ask> findByTitle(String title);
+    //titleContaining
+
 
 
 

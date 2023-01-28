@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+    <div>
+        <table>
+            <thead>
+            <tr>
+
+                <th>제목</th>
+            </tr>
+            </thead>
+            <tbody>
+            //ask list
+
+            <span th:each="ask : ${ask}">
+                <tr>
+                <td>
+                    <a th:text="${ask.title}" th:href="@{'/questions/'+ ${ask.no}}" ></a>
+                </td>
+                <td th:text="${ask.contents}"></td>
+                <td th:text="${ask.tags}"></td>"
+                </tr>
+            </span>
+
+
+            </tbody>
+        </table>
+
+
+        <table>
+
+            <thead>
+            <tr>
+
+                <th>내용</th>
+            </tr>
+            </thead>
+            <tbody>
+            <p> 내용</p>
+            <span th:each="content : ${content}">
+                <tr>
+                <td>
+                    <a th:text="${content.title}" th:href="@{'/questions/'+ ${content.no}}" ></a>
+                </td>
+                <td th:text="${content.contents}"></td>
+                <td th:text="${content.tags}"></td>"
+                </tr>
+            </span>
+            </tbody>
+        </table>
+    </div>
+</div>
