@@ -143,10 +143,6 @@
 
 
                 <span th:each="comment: ${comment}" th:if="${comment.depth==0}">
-
-
-
-
                             <div> writer : gongchamcham" </div>
                             <p th:text="${comment.commentNo}"></p>
 
@@ -164,20 +160,15 @@
                                 <button type="submit" class="btn btn-primary">selected</button>
                         </form>
 
-
-
-
-
-
-                         <!--<form th:action="@{|/questions/comment/${asks.no}/reply|}" method="post">
+                         <form th:action="@{|/questions/comment/${asks.no}/reply|}" method="post">
                             <input type="text" name="reply" placeholder="reply"/>
                             <input type="hidden" name="commentGroup" th:value="${comment.commentNo}"/>
                             <button type="submit" class="btn btn-primary">reply</button>
-                        </form>-->
-                         <button id="replyButton">reply</button>
+                        </form>
+                      <!--   <button id="replyButton">reply</button>-->
                     </div>
                     <div id="replyArea"> </div>
-                    <!--<div ><button id="hide_more_button" style="display: none">접기</button><br></div>
+                   <!-- <div ><button id="hide_more_button" style="display: none">접기</button><br></div>
                     <div ><button id="show_more_button" style="display: block">펼치기</button></div>-->
                     <span th:each="reply: ${reply}" th:if="${reply.commentGroup == comment.commentNo}" class="reply" >
 
@@ -329,7 +320,7 @@
     });
     </script>
 <script type="text/javascript">
-   /* document.getElementById('hide_more_button').addEventListener("click", function() {
+    /*document.getElementById('hide_more_button').addEventListener("click", function() {
 
         document.getElementById('reply').style.display = 'none';
         document.getElementById('show_more_button').style.display = 'block';

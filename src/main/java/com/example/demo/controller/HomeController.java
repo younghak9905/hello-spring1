@@ -9,10 +9,7 @@ import com.example.demo.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RequiredArgsConstructor
@@ -26,8 +23,12 @@ public class HomeController{
 
 
     @GetMapping("/")
-    public String home() {
-        return "/home";
+    public String home(@SessionAttribute(name = "member", required = false) String member, Model model) {
+       if(member==null) {
+          return "home";
+       }
+        model.addAttribute("member", member);
+        return "loginhome";
     }
 
     @RequestMapping("/jsp")
