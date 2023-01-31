@@ -17,7 +17,6 @@ public class AskRequestDto {
     private String title;
     private String contents;
     private String createdDate;
-
     private String tags;
     public Ask toEntity() {
         Ask ask = Ask.builder()

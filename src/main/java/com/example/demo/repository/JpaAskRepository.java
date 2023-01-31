@@ -62,6 +62,8 @@ public class JpaAskRepository implements AskRepository {
 
 
 
+
+
     @Override
     public Optional<Ask> findByTags(String tags) {
         List<Ask> result = em.createQuery("select a from Ask a where a.tags = :tags", Ask.class)
@@ -81,6 +83,12 @@ public class JpaAskRepository implements AskRepository {
     @Override
     public List<Ask> findAll() {
         return em.createQuery("select a from Ask a", Ask.class)
+                .getResultList();
+    }
+    @Override
+    public List<Ask> findAllByTags(String tags){
+        return em.createQuery("select c from Ask c where c.tags like :tags",Ask.class )
+                .setParameter("tags","%"+tags+"%")
                 .getResultList();
     }
 
@@ -234,4 +242,5 @@ public class JpaAskRepository implements AskRepository {
                 .setParameter("no", no)
                 .executeUpdate();
     }
+
 }

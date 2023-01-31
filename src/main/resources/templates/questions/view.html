@@ -123,8 +123,6 @@
 //save comment
 
 <br/>
-
-
 <div class="card">
     <div class="card-header">comment list</div>
     <ul calss="list-group">
@@ -134,7 +132,6 @@
                   <p>writer : gongchamcham </p>
                 <p th:text="${comment.commentNo}"></p>
                   <p th:utext="${@commonUtil.markdown(comment.reply)}" th:rows="4"></p>
-                    <p class="date" th:text="${comment.replyDate}"></p>
                 </div>
                   <hr>
                 <br><br>
@@ -146,12 +143,11 @@
 
 
 
-
+                        <p th:text="${comment.getAskNo().getNo()}"></p>
                             <div> writer : gongchamcham" </div>
                             <p th:text="${comment.commentNo}"></p>
 
                      <p th:utext="${@commonUtil.markdown(comment.reply)}" th:rows="4"></p>
-                     <p class="date" th:text="${comment.replyDate}"></p>
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary">modify</button>
                     <form th:action="@{|/questions/comment/delete/${comment.commentNo}|}">
@@ -164,28 +160,19 @@
                                 <button type="submit" class="btn btn-primary">selected</button>
                         </form>
 
-
-
-
-
-
-                         <!--<form th:action="@{|/questions/comment/${asks.no}/reply|}" method="post">
+                         <form th:action="@{|/questions/comment/${asks.no}/reply|}" method="post">
                             <input type="text" name="reply" placeholder="reply"/>
                             <input type="hidden" name="commentGroup" th:value="${comment.commentNo}"/>
                             <button type="submit" class="btn btn-primary">reply</button>
-                        </form>-->
-                         <button id="replyButton">reply</button>
+                        </form>
                     </div>
-                    <div id="replyArea"> </div>
-                    <!--<div ><button id="hide_more_button" style="display: none">접기</button><br></div>
-                    <div ><button id="show_more_button" style="display: block">펼치기</button></div>-->
-                    <span th:each="reply: ${reply}" th:if="${reply.commentGroup == comment.commentNo}" class="reply" >
 
-                    <div class="reply" id="reply">
+                    <span th:each="reply: ${reply}" th:if="${reply.commentGroup == comment.commentNo}" class="reply">
+
+                    <div class="reply">
                          <div> writer : gongchamcham</div>
                             <p th:text="${reply.commentNo}"></p>
                      <p th:utext="${@commonUtil.markdown(reply.reply)}" th:rows="4"></p>
-                         <p class="date" th:text="${reply.replyDate}"></p>
 
 
 
@@ -201,7 +188,7 @@
 
                              <form th:action="@{|/questions/comment/${asks.no}/reply|}" method="post">
                                 <input type="text" name="reply" placeholder="reply"/>
-                                <input type="hidden" name="commentGroup" th:value="${comment.commentGroup}"/>
+                                <input type="hidden" name="commentGroup" th:value="${reply.commentNo}"/>
                                 <button type="submit" class="btn btn-primary">reply</button>
                             </form>
                         </div>
@@ -241,7 +228,7 @@
         </ul>
 
     </div>
-    <form th:action="@{|/questions/comment/${asks.no}|}" method="post" id="replySubmit">
+    <form th:action="@{|/questions/comment/${asks.no}|}" method="post" id="reply-submit">
         <div id="comment-write">
                 <textarea id="wmd-input" name="reply" class="wmd-input s-input bar0 js-post-body-field processed"
                           data-editor-type="wmd" data-post-type-id="2" cols="92" rows="15"
@@ -314,7 +301,7 @@
         editor.value = editor.value.substring(0, editor.selectionStart) + newText + editor.value.substring(editor.selectionEnd);
     });
 
-    document.getElementById("replySubmit").addEventListener("submit", function(event) {
+    document.getElementById("reply-submit").addEventListener("submit", function(event) {
         event.preventDefault();
         let markdownText = document.getElementById("wmd-input").value;
 
@@ -325,60 +312,7 @@
         document.getElementById("wmd-input").innerHTML = marked(markdownText);
         // form submit
         this.submit();
-
     });
-    </script>
-<script type="text/javascript">
-   /* document.getElementById('hide_more_button').addEventListener("click", function() {
-
-        document.getElementById('reply').style.display = 'none';
-        document.getElementById('show_more_button').style.display = 'block';
-        document.getElementById('hide_more_button').style.display = 'none';
-        console.log("hide");
-    });
-
-    document.getElementById('show_more_button').addEventListener("click", function() {
-
-        document.getElementById('reply').style.display = 'block';
-        document.getElementById('show_more_button').style.display = 'none';
-        document.getElementById('hide_more_button').style.display = 'block';
-        console.log("hide");
-    });*/
-if(document.getElementById('replyButton')) {
-    document.getElementById('replyButton').addEventListener("click", function () {
-        console.log("reply");
-        const form = document.createElement("form");
-        form.setAttribute("th:action", "@{|/questions/comment/${asks.no}/reply|}");
-        form.setAttribute("method", "post");
-
-        const textarea = document.createElement("textarea");
-        textarea.setAttribute("name", "reply");
-        textarea.setAttribute("class", "wmd-input s-input bar0 js-post-body-field processed");
-        textarea.setAttribute("data-editor-type", "wmd");
-        textarea.setAttribute("data-post-type-id", "2");
-        textarea.setAttribute("cols", "92");
-        textarea.setAttribute("rows", "15");
-        textarea.setAttribute("aria-labelledby", "your-answer-header");
-        textarea.setAttribute("tabindex", "101");
-        textarea.setAttribute("data-min-length", "");
-
-        const input = document.createElement("input");
-        input.setAttribute("type", "hidden");
-        input.setAttribute("name", "commentGroup");
-        input.setAttribute("th:value", "${comment.commentNo}");
-
-        const button = document.createElement("button");
-        button.setAttribute("type", "submit");
-        button.setAttribute("class", "btn btn-primary");
-        button.innerHTML = "답글등록";
-
-        form.appendChild(textarea);
-        form.appendChild(input);
-        form.appendChild(button);
-
-        document.getElementById("replyArea").appendChild(form);
-    });
-}
 
 
 

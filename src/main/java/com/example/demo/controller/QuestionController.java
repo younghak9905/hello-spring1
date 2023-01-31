@@ -10,12 +10,14 @@ import com.example.demo.service.AskService;
 import com.example.demo.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.metrics.StartupStep;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/questions", method = {RequestMethod.GET, RequestMethod.POST})
@@ -35,6 +37,7 @@ public class QuestionController {
         askService.write(requestDto);
        return "redirect:/questions/questionList";
     }
+
 
     @GetMapping(value="/questionList")
     public String list(Model model) {
@@ -72,5 +75,10 @@ public class QuestionController {
         model.addAttribute("ask", ask);
         return "/questions/edit";
     }
-
+    //내가 손댄 부분!!!!!!!!!!!!!!!!
+    @GetMapping(value="/tagList")
+    public String tagList(Model model,String tags){
+        List<Ask> tagList=askService.findAllByTags(tags);
+        model.addAttribute("asks",tagList);
+        return "/questions/tagList";}
 }
