@@ -315,7 +315,7 @@
     document.getElementById("code-button").addEventListener("click", function() {
         const editor = document.getElementById("wmd-input");
         const selectedText = editor.value.substring(editor.selectionStart, editor.selectionEnd);
-        const newText = "` <code> " + selectedText + "`";
+        const newText = "``` <code> " + selectedText + "  ```";
         editor.value = editor.value.substring(0, editor.selectionStart) + newText + editor.value.substring(editor.selectionEnd);
     });
 //엔터 인식
