@@ -31,6 +31,7 @@ dependencies {
 	implementation 'org.commonmark:commonmark:0.21.0'
 	implementation 'org.commonmark:commonmark-ext-gfm-tables:0.21.0'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
 
 

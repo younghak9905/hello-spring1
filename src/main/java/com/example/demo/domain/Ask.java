@@ -28,6 +28,9 @@ public class Ask extends TimeEntity{
     @Column(nullable = false)
     private String tags;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "writer_no")
+    private Member member;
 
 
 
