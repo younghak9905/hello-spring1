@@ -2,6 +2,13 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/basic">
 <link rel="stylesheet" href="/static/css/board.css">
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown-light.min.css"
+        integrity="sha512-zb2pp+R+czM7GAemdSUQt6jFmr3qCo6ikvBgVU6F5GvwEDR0C2sefFiPEJ9QUpmAKdD5EqDUdNRtbOYnbF/eyQ=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+/>
 
 <style>
 
@@ -134,7 +141,7 @@
 
                   <p th:text="${comment.getWriter().getName()}"></p>
                 <p th:text="${comment.commentNo}"></p>
-                   <pre th:utext="${@commonUtil.markdown(comment.reply)}" th:rows="4" ></pre>
+                   <pre th:utext="${@commonUtil.markdown(comment.reply)}" th:rows="4" class="markdown-body"></pre>
                 </div>
                   <hr>
                 <br><br>
@@ -150,7 +157,7 @@
                             <p th:text="${comment.getWriter().getName()}"> writer:</p>
                             <p th:text="${comment.commentNo}"></p>
 
-                     <pre th:utext="${@commonUtil.markdown(comment.reply)}" th:rows="4" id="answer"></pre>
+                    <pre th:utext="${@commonUtil.markdown(comment.reply)}" th:rows="4" class="markdown-body"></pre>
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary">modify</button>
                     <form th:action="@{|/questions/comment/delete/${comment.commentNo}|}" th:if="${comment.getWriter().getNo()==1}">
@@ -175,7 +182,7 @@
                     <div class="reply">
                         <p th:text="${reply.getWriter().getName()}"> writer:</p>
                             <p th:text="${reply.commentNo}"></p>
-                        <p th:utext="${@commonUtil.markdown(reply.reply)}" th:rows="4"></p>
+                        <p th:utext="${@commonUtil.markdown(reply.reply)}" class="markdown-body"  th:rows="4"></p>
 
 
 
