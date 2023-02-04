@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="layout/basic">
-<link rel="stylesheet" href="/static/css/board.css">
+      layout:decorate="layout/basic" xmlns="http://www.w3.org/1999/html">
+<link rel="stylesheet" href="/css/board.css">
 <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown-light.min.css"
@@ -105,6 +105,10 @@
         height: 44px;
         border-bottom: 1px solid hsl(210,8%,75%);
     }
+    .answer-between{
+        display: flex;
+        justify-content: space-between;
+    }
 
 
 </style>
@@ -120,7 +124,7 @@
                 <div>
 
                     <h1 th:text="${asks.title}"></h1>
-                    <pre th:text="${asks.contents}"></pre>
+                    <pre th:utext="${@commonUtil.markdown(asks.contents)}" class="markdown-body"></pre>
                     <p th:text="${asks.no}"></p>
                     <p th:text="${asks.tags}"></p>
 
@@ -136,12 +140,14 @@
             <div class="card-header">comment list</div>
             <ul calss="list-group">
                 <li class="list-group-item d-flex">
-            <span th:each="comment: ${comment}" th:if="${comment.selected==1}" >
-                <div id="comment_box" class="selected">
 
-                  <p th:text="${comment.getWriter().getName()}"></p>
-                <p th:text="${comment.commentNo}"></p>
+            <span th:each="comment: ${comment}" th:if="${comment.selected == 'true'}" >
+                <div id="comment_box" class="selected">
+                     <p th:text="${comment.commentNo}"></p>
+                    <div class="answer-between">
                    <pre th:utext="${@commonUtil.markdown(comment.reply)}" th:rows="4" class="markdown-body"></pre>
+                         <p th:text="${comment.getWriter().getName()}"></p>
+                     </div>
                 </div>
                   <hr>
                 <br><br>
@@ -159,7 +165,12 @@
 
                     <pre th:utext="${@commonUtil.markdown(comment.reply)}" th:rows="4" class="markdown-body"></pre>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary">modify</button>
+
+                         <button type="button"
+                                 th:onclick="'edit('+${comment.commentNo}+')'"
+                                 class="btn btn-primary" th:id="'edit-button'+${comment.commentNo}">edit</button>
+
+                     </form>
                     <form th:action="@{|/questions/comment/delete/${comment.commentNo}|}" th:if="${comment.getWriter().getNo()==1}">
 
                         <button type="submit" class="btn btn-primary">delete</button>
@@ -169,25 +180,46 @@
                         <form th:action="@{|/questions/comment/selected/${comment.commentNo}|}" method="post" th:if="${comment.getWriter().getNo()==1}">
                                 <button type="submit" class="btn btn-primary">selected</button>
                         </form>
+                         <button type="button"
+                                 th:onclick="'reply('+${comment.commentNo}+')'"
+                                 class="btn btn-primary" th:id="'reply-button'+${comment.commentNo}">reply</button>
 
-                         <form th:action="@{|/questions/comment/${asks.no}/reply|}" method="post" >
-                            <input type="text" name="reply" placeholder="reply"/>
+
+                    </div>
+
+                          <form th:action ="@{|/questions/comment/edit/${comment.commentNo}|}"
+                                th:if="${comment.getWriter().getNo()==1}"
+                                style="display: none"
+                                th:id="'edit'+${comment.commentNo}">
+
+                          <textarea name="reply" class="wmd-input s-input bar0 js-post-body-field processed"
+                                    data-editor-type="wmd" data-post-type-id="2" cols="92" rows="15"
+                                    th:placeholder="${comment.reply}"
+                                    aria-labelledby="your-answer-header" tabindex="101" data-min-length=""></textarea>
+                        <button type="submit" class="btn btn-primary">modify</button>
+                          </form>
+                         <form th:action="@{|/questions/comment/${asks.no}/reply|}" method="post" th:id="'reply'+${comment.commentNo}" style="display: none" >
+                          <textarea name="reply" class="wmd-input s-input bar0 js-post-body-field processed"
+                                    data-editor-type="wmd" data-post-type-id="2" cols="92" rows="15"
+                                    aria-labelledby="your-answer-header" tabindex="101" data-min-length=""></textarea>
                             <input type="hidden" name="commentGroup" th:value="${comment.commentNo}"/>
                             <button type="submit" class="btn btn-primary">reply</button>
                         </form>
-                    </div>
 
                     <span th:each="reply: ${reply}" th:if="${reply.commentGroup == comment.commentNo}" class="reply">
 
                     <div class="reply">
                         <p th:text="${reply.getWriter().getName()}"> writer:</p>
                             <p th:text="${reply.commentNo}"></p>
-                        <p th:utext="${@commonUtil.markdown(reply.reply)}" class="markdown-body"  th:rows="4"></p>
+                        <pre th:utext="${@commonUtil.markdown(reply.reply)}" class="markdown-body"  th:rows="4"></pre>
 
 
 
                         <div class="btn-group">
-                            <button type="button" class="btn btn-primary">modify</button>
+                            <button type="button"
+                                    th:onclick="'edit('+${reply.commentNo}+')'"
+                                    class="btn btn-primary" th:id="'edit-button'+${reply.commentNo}">edit</button>
+
                             <!--delete comment -->
 
 
@@ -199,17 +231,37 @@
                             <form th:action="@{|/questions/comment/selected/${reply.commentNo}|}" method="post" th:if="${reply.getWriter().getNo()==1}">
                                 <button type="submit" class="btn btn-primary">selected</button>
                             </form>
+                              <button type="button"
+                                      th:onclick="'reply('+${reply.commentNo}+')'"
+                                      class="btn btn-primary" th:id="'reply-button'+${reply.commentNo}">reply</button>
 
-                             <form th:action="@{|/questions/comment/${asks.no}/reply|}" method="post">
-                                <input type="text" name="reply" placeholder="reply"/>
-                                <input type="hidden" name="commentGroup" th:value="${reply.commentNo}"/>
-                                <button type="submit" class="btn btn-primary">reply</button>
-                            </form>
+
                         </div>
+                          <form th:action ="@{|/questions/comment/edit/${reply.commentNo}|}"
+                                th:if="${comment.getWriter().getNo()==1}"
+                                style="display: none"
+                                th:id="'edit'+${reply.commentNo}">
+
+                        <textarea name="reply" class="wmd-input s-input bar0 js-post-body-field processed"
+                                  data-editor-type="wmd" data-post-type-id="2" cols="92" rows="15"
+                                  th:placeholder="${reply.reply}"
+                                  aria-labelledby="your-answer-header" tabindex="101" data-min-length=""></textarea>
+                              <!--th:placeholder="${reply.reply}"-->
+                            <button type="submit" class="btn btn-primary">modify</button>
+                         </form>
+
+                        <form th:action="@{|/questions/comment/${asks.no}/reply|}" method="post" th:id="'reply'+${reply.commentNo}" style="display:none">
+                              <textarea name="reply" class="wmd-input s-input bar0 js-post-body-field processed"
+                                        data-editor-type="wmd" data-post-type-id="2" cols="92" rows="15"
+                                        aria-labelledby="your-answer-header" tabindex="101" data-min-length=""></textarea>
+                                <input type="hidden" name="commentGroup" th:value="${comment.commentNo}"/>
+                                <button type="submit" class="btn btn-primary" id="reply-submit">reply</button>
+                        </form>
                     </div>
 
                      </span>
                       <hr>
+
             </span>
 
 
@@ -272,9 +324,40 @@
 </div>
 </body>
 <script>
+//onclick
+//temp는 정수
 
 
+let temp=0;
+function clear(commentNo){
+    if(document.getElementById("reply"+temp)!=null)
+    {
+    document.getElementById("reply"+temp).style.display = "none";
+    document.getElementById("reply-button"+temp).style.display = "block";
+    document.getElementById("edit"+temp).style.display = "none";
+    document.getElementById("edit-button"+temp).style.display = "block";}
+    temp=commentNo;
+}
 
+    function reply(commentNo){
+
+      clear(commentNo);
+
+
+        document.getElementById("reply"+commentNo).style.display = "block";
+        document.getElementById("reply-button"+commentNo).style.display = "none";
+        document.getElementById("edit"+commentNo).style.display = "none";
+        document.getElementById("edit-button"+commentNo).style.display = "block";
+    }
+    function edit(commentNo){
+        clear(commentNo);
+
+        document.getElementById("edit"+commentNo).style.display = "block";
+        document.getElementById("edit-button"+commentNo).style.display = "none";
+        document.getElementById("reply"+commentNo).style.display = "none";
+        document.getElementById("reply-button"+commentNo).style.display = "block";
+
+    }
 
 
     let markdownText = document.getElementById("wmd-input").value;

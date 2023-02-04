@@ -69,5 +69,11 @@ AskRepository askRepository;
         return "redirect:/questions/"+no;
     }
 
+    @PostMapping("/comment/edit/{commentNo}")
+    public String edit(CommentRequestDto dto,@PathVariable("commentNo") Long commentNo){
+        Long no = commentService.edit(commentNo, dto);
+        return "redirect:/questions/"+no;
+    }
+
 }
 

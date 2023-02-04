@@ -71,6 +71,14 @@ public class JpaAskRepository implements AskRepository {
     }
 
     @Override
+    public List<Ask> findAllByTags(String tags) {
+        return em.createQuery("select a from Ask a where a.tags like :tags", Ask.class)
+                .setParameter("tags", "%" + tags + "%")
+                .getResultList();
+    }
+
+
+    @Override
     public Optional<Ask> findByCreatedDate(String createdDate) {
         List<Ask> result = em.createQuery("select a from Ask a where a.createdDate = :createdDate", Ask.class)
                 .setParameter("createdDate", createdDate)
@@ -111,11 +119,12 @@ public class JpaAskRepository implements AskRepository {
     public void deleteById(Long aLong) {
 
 
+
     }
 
     @Override
     public void delete(Ask entity) {
-
+        em.remove(entity);
     }
 
     @Override

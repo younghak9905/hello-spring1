@@ -87,15 +87,28 @@ public class CommentService {
         );
 
         Long askNo= comment.getAsk().getNo();
-        Comment AlreadySelected = commentRepository.findBySelected(askNo);
+        String selected = "true";
+        Comment AlreadySelected = commentRepository.findBySelectedAndAskNo(selected,askNo);
+
         if(AlreadySelected != null){
-            AlreadySelected.setSelected(0L);
+            AlreadySelected.setSelected("false");
+            System.out.print("채택된 댓글이 있습니다.!!!!!!");
+        }else{
+            System.out.print("채택된 댓글이 없습니다!!!!!!!!");
         }
-        comment.setSelected(1L);
+        comment.setSelected("true");
 
         return askNo;
     }
 
+    @Transactional
+    public Long edit(Long commentNo, CommentRequestDto dto) {
+        Comment comment = commentRepository.findByCommentNo(commentNo).orElseThrow(
+                () -> new IllegalArgumentException("해당 댓글이 없습니다. no=" + commentNo)
+        );
+        comment.edit(dto.getReply());
+        return comment.getAsk().getNo();
+    }
 
 
 

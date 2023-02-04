@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class MemberRequestDto {
+    private Long no;
     private String name;
     private String email;
     private String password;
@@ -22,6 +23,7 @@ public class MemberRequestDto {
 
     public Member toEntity() {
         Member member =Member.builder()
+                .no(no)
                 .name(name)
                 .email(email)
                 .password(password)

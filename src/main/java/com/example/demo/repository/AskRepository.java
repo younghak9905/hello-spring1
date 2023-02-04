@@ -17,12 +17,13 @@ public interface AskRepository extends JpaRepository<Ask, Long> {
     //titleContaining
 
 
-
+//delete
 
     Optional<Ask> findByContents(String contents);
 
     List<Ask> findByTitleContaining(String title);
 
+  List<Ask> findAllByTags(String tags);
     List<Ask> findByContentsContaining(String contents);
 
  //  Optional<Ask> findByWriterNo(Long writerNo);
@@ -30,6 +31,7 @@ public interface AskRepository extends JpaRepository<Ask, Long> {
     Optional<Ask> findByTags(String tags);
 
    Optional<Ask> findByCreatedDate(String createdDate);
+
 
   List<Ask> findAll();
 

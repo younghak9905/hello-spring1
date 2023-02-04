@@ -37,4 +37,6 @@ public class MemberResponseDto {
                 .collect(Collectors.toList());
 
     }
+
+
 }

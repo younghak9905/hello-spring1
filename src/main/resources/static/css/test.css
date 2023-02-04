@@ -1,0 +1,8 @@
+body{
+    background-color: red;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: hsl(210,8%,20%);
+    margin: 0;
+    padding: 0;
+}

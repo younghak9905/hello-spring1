@@ -1,7 +1,24 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<link rel=stylesheet type="text/css" href="/css/board.css">
+
+<style>
+
+    .top{
+        margin-top : 10px;
+    }
+    .member-name-link{
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
 <body>
+<div class="top"></div>
+<div class="grid-container">
+<div class="left"></div>
+<div class="center">
 <div class="container">
+
     <div>
         <table>
             <thead>
@@ -11,11 +28,19 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="member : ${members}">
-                <td th:text="${member.id}"></td>
-                <td th:text="${member.name}"></td>
-            </tr>
+            <span th:each="member : ${members}">
+                <div class="member-name-link">
+                <a th:text="${member.name}" th:href="@{'/members/memberPage/'+ ${member.no}}"></a>
+
+                </div>
+
+
+            </span>
             </tbody>
         </table>
     </div>
+</div>
+
+</div>
+<div class="right"></div>
 </div>

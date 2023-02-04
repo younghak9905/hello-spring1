@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" href="/css/board.css">
+<style>
+    .stat-box{
+        border-right: 1px solid hsl(210,8%,65%);
+        display: inline-block;
+        display: flex;
+    }
+    .stat-box p{
+        margin-right: 10px;
+    }
+</style>
+<body>
+
+
+<div class="top"></div>
+<div class="grid-container">
+    <div class="left"></div>
+    <div class="center">
+<div class="container">
+    <div class="profile">
+    <div class="profile-img">
+        <img src="" onerror="this.src='/image/jordan1-1.PNG'"/>
+    </div>
+    <h1 th:text="${member.name}"></h1>
+    </div>
+    <div class="stat">
+      <h2 >Stat</h2>
+        <div class="stat-box">
+            <p>좋아요 30  </p> <p>답변수 20 </p> <p>질문수  10</p> <p>rank</p>
+        </div>
+        <hr>
+        <br><br>
+        <h3>profile link</h3>
+        <div class="github">
+            <a th:text="${member.github}" th:href="${member.github}">github</a>
+            <a th:text="${member.blog}" th:href="${member.blog}">blog</a>
+        </div>
+
+        <div class="badges">
+            <h2>Badge</h2>
+            <p>badges</p>
+        </div>
+        <hr>
+        <br><br>
+    </div>
+
+    <div class="activity">
+        <h2>활동</h2>
+        <span th:each="ask : ${ask}">
+            <div class="ask">
+                <a th:text="${ask.title}" th:href="@{'/questions/'+${ask.no}}"></a>
+            </div>
+        </span>
+    </div>
+    <hr>
+    <br><br>
+</div>
+        </div>
+<div class="right"></div>
+    </div>
+</body>
+</html>

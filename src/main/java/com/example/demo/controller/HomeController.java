@@ -12,16 +12,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.List;
-
+@RequiredArgsConstructor
 @Controller
-public class HomeController{
+public class HomeController {
 
+    private final AskService askService;
+    private CommentService commentService;
+    private final CommentRepository commentRepository;
+    private final AskRepository askRepository;
 
 
     @GetMapping("/")
-    public String home() {
-        return "/home";
+    public String home(@SessionAttribute(name = "member", required = false) String member, Model model) {
+        if (member == null) {
+            return "home";
+        }
+        model.addAttribute("member", member);
+        return "loginhome";
     }
 
     @RequestMapping("/jsp")
@@ -29,7 +36,28 @@ public class HomeController{
         return "index";
     }
 
+    @PostMapping("/search")
+    public String search(Model model, String search) {
+
+        System.out.println("search = " + search);
+        if (search != null) {
+            List<Ask> searchList = askRepository.findByTitleContaining(search);
+            model.addAttribute("ask", searchList);
+
+            List<Ask> searchContent = askRepository.findByContentsContaining(search);
+            model.addAttribute("content", searchContent);
+        }
 
 
+        return "/questions/searchList";
+    }
 
+    @GetMapping("/css")
+    public String css() {
+        return "css";
+
+    }
 }
+
+
+

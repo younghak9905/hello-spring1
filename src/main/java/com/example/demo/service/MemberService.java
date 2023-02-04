@@ -1,7 +1,10 @@
 package com.example.demo.service;
 
+import com.example.demo.domain.Ask;
 import com.example.demo.domain.Member;
+import com.example.demo.dto.AskResponseDto;
 import com.example.demo.dto.MemberRequestDto;
+import com.example.demo.dto.MemberResponseDto;
 import com.example.demo.repository.MemberRepository;
 import org.springframework.stereotype.Service;import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +37,10 @@ public class MemberService {
     }
     public Long join(MemberRequestDto requestDto) {
         validateDuplicateMember(requestDto.toEntity());
+
         return memberRepository.save(requestDto.toEntity()).getNo();
+
+
     }
 
 
@@ -46,5 +52,11 @@ public class MemberService {
     //특정 회원 조회
     public Optional<Member> findOne(Long memberNo) {
         return memberRepository.findByNo(memberNo);
+    }
+
+
+    public MemberResponseDto findMember(Long no) {
+        Member member = memberRepository.findByNo(no).get();
+        return new MemberResponseDto(member);
     }
 }

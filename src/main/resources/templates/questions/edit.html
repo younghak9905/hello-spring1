@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="javascript" href="/static/js/input.js">
+<link rel="stylesheet" href="/static/css/board.css">
+//edit comment
+
+<body>
+
+<div class="container">
+    <div>
+       <textarea name="reply" class="wmd-input s-input bar0 js-post-body-field processed"
+                 data-editor-type="wmd" data-post-type-id="2" cols="92" rows="15"
+                 aria-labelledby="your-answer-header" tabindex="101" data-min-length=""  th:placeholder=""></textarea>
+    </div>
+
+
+    <div class="answer-box">
+        <div id="answer-btn-bar" class="btn-group">
+            <ul id="answer-btn-row" class="answer-btn-row">
+                <button type="button" class="up-button" id="bold-button" title="Strong <strong> Ctrl+B">
+                    <span style="background-position: 0px 0px;">B</span></button>
+                <button class="up-button" id="italic-button" title="Emphasis <em> Ctrl+I">
+                    <span style="background-position: -20px 0px;">I</span></button>
+                <button class="up-button" id="link-button" title="Hyperlink <a> Ctrl+L">
+                    <span style="background-position: -40px 0px;">L</span></button>
+                <button class="up-button" id="quote-button" title="Blockquote <blockquote> Ctrl+Q">
+                    <span style="background-position: -60px 0px;">"</span>
+                </button>
+                <button class="up-button" id="code-button" title="Code Sample <pre><code> Ctrl+K">
+                    <span style="background-position: -80px 0px;">{}</span>
+                </button>
+
+                <button class="up-button" id="image-button" title="Image <img> Ctrl+G">
+                    <span style="background-position: -100px 0px;">image</span>
+                </button>
+
+                <button class="up-button" id="snippet-button" title="JavaScript/HTML/CSS snippet Ctrl-M">
+                    <span>snippet</span>
+                </button>
+
+            </ul>
+
+        </div>
+        <form th:action="@{|/questions/comment/${asks.no}|}" method="post" id="replySubmit">
+            <div id="comment-write">
+                <textarea id="wmd-input" name="reply" class="wmd-input s-input bar0 js-post-body-field processed"
+                          data-editor-type="wmd" data-post-type-id="2" cols="92" rows="15"
+                          aria-labelledby="your-answer-header" tabindex="101" data-min-length=""></textarea>
+
+                <button type="submit">댓글 등록</button>
+            </div>
+        </form>
+
+    </div>
+
+
+</html>

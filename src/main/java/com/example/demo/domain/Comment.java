@@ -29,9 +29,9 @@ public class Comment{
 
     @Column(nullable = true)
     private Long depth;
-
-    @Column(name="selected")
-    private Long selected;
+//selected='1' 이면 채택
+    @Column
+    private String selected;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -44,6 +44,10 @@ public class Comment{
 
     public void update(Long commentGroup) {
         this.commentGroup = commentGroup;
+    }
+
+    public void edit(String reply) {
+        this.reply = reply;
     }
 
 

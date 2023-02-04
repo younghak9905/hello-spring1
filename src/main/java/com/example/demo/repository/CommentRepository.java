@@ -39,7 +39,7 @@ public interface CommentRepository  extends JpaRepository<Comment, Long> {
 
 
 
-    Comment findBySelected(Long askNo);
+   Comment findBySelectedAndAskNo(String selected, Long askNo);
     //u Comment update(Long commentNo, String reply
 
 

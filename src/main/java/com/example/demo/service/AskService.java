@@ -32,6 +32,11 @@ public AskService(AskRepository askRepository) {
     }
 
 
+    public void delete(Long askNo) {
+        Ask ask= askRepository.findByNo(askNo).get();
+        askRepository.delete(ask);
+
+    }
 
     public List<Ask> findAsks() {
         return askRepository.findAll();
@@ -52,6 +57,15 @@ public AskService(AskRepository askRepository) {
         }
         return null;
     }
+
+public List<Ask> findAllByTags(String tags) {
+        if(tags !=null) {
+            return askRepository.findAllByTags(tags);
+        }
+        return null;
+    }
+
+
 
 
 }

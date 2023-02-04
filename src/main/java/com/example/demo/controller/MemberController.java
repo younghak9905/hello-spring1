@@ -1,25 +1,32 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.Ask;
 import com.example.demo.domain.Member;
+import com.example.demo.dto.AskResponseDto;
+import com.example.demo.dto.CommentResponseDto;
 import com.example.demo.dto.MemberRequestDto;
+import com.example.demo.dto.MemberResponseDto;
+import com.example.demo.repository.AskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import com.example.demo.service.MemberService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/members")
 public class MemberController {
     private final MemberService memberService;
+    private final AskRepository askRepository;
 
-@Autowired
-    public MemberController(MemberService memberService) {
+    @Autowired
+    public MemberController(MemberService memberService,
+                            AskRepository askRepository) {
         this.memberService = memberService;
+        this.askRepository = askRepository;
     }
 
     @GetMapping(value="/new")
@@ -39,8 +46,16 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @GetMapping(value="/memberPage")
-    public String memberPage() {
+    @GetMapping(value="/memberPage/{no}")
+    public String memberPage(@PathVariable Long no, Model model){
+        MemberResponseDto member = memberService.findMember(no);
+
+        model.addAttribute("member", member);
+        List <AskResponseDto> asks = member.getAsk();
+        model.addAttribute("ask", asks);
+        List <CommentResponseDto > comments = member.getComments();
+        model.addAttribute("comment", comments);
+
         return "/members/memberPage";
     }
 }

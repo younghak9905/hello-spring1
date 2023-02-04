@@ -32,6 +32,9 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Comment> comment = Collections.emptyList();
 
+    //MemberStat answerCount,askCount,score
+
+
 
 
 }

@@ -11,7 +11,7 @@
   <button type="submit" style="width:20%; height: 80%">Go</button>
 </form>
 <div style="display:flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
-  <form action="/questions/new/questionList" method="post" style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 50%; height: 50%;">
+  <form action="/questions/new/questionList" method="post" class="ask-submit" style="display: flex; flex-direction: column;align-items: center; justify-content: center; width: 50%; height: 50%;">
     <div style="margin: 10px;">
       <input type="text" id="title" name="title" placeholder="제목을 입력하세요" style="width: 100%; height: 30px; font-size: 18px;">
     </div>
@@ -31,6 +31,24 @@
 
     <button type="submit" style="width: 50%; height: 30px; font-size: 18px;">작성</button>
   </form>
+
+
 </div>
 </body>
+<script>
+  document.getElementById("replySubmit").addEventListener("submit", function(event) {
+    event.preventDefault();
+    let markdownText = document.getElementById("contents").value;
+
+
+    function marked(markdownText) {
+      return "";
+    }
+
+    document.getElementById("contents").innerHTML = marked(markdownText);
+    // form submit
+    this.submit();
+
+  });
+</script>
 </html>

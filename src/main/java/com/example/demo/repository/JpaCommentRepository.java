@@ -96,11 +96,11 @@ this.em = em;
 
 
     @Override
-    public Comment findBySelected(Long askNo){
-        return em.createQuery("select c from Comment c where c.ask.no = :askNo and c.selected = 1", Comment.class)
-            .setParameter("askNo", askNo)
-
-    .getSingleResult();
+    public Comment findBySelectedAndAskNo(String selected, Long askNo){
+        return em.createQuery("select c from Comment c where c.ask.no=:askNo and c.selected=:selected" , Comment.class)
+                .setParameter("askNo", askNo)
+                .setParameter("selected", selected)
+                .getSingleResult();
     }
 
     @Override
