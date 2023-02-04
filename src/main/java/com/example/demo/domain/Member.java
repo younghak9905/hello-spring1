@@ -2,10 +2,9 @@ package com.example.demo.domain;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collections;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,7 +26,11 @@ public class Member {
     private String blog;
 
 
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Ask> ask = Collections.emptyList();
 
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Comment> comment = Collections.emptyList();
 
 
 

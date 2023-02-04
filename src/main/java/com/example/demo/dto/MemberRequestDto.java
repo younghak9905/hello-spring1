@@ -4,6 +4,8 @@ import com.example.demo.domain.Ask;
 import com.example.demo.domain.Member;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,6 +18,8 @@ public class MemberRequestDto {
     private String id;
     private String github;
     private String blog;
+
+
     public Member toEntity() {
         Member member =Member.builder()
                 .name(name)

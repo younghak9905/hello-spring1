@@ -1,6 +1,7 @@
 package com.example.demo.dto;
 
 import com.example.demo.domain.Ask;
+import com.example.demo.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,8 @@ public class AskRequestDto {
     private String title;
     private String contents;
     private String createdDate;
+    private Member writer;
+
     private String tags;
     public Ask toEntity() {
         Ask ask = Ask.builder()
@@ -24,6 +27,7 @@ public class AskRequestDto {
                 .title(title)
                 .contents(contents)
                 .tags(tags)
+                .member(writer)
                 .build();
         return ask;
     }

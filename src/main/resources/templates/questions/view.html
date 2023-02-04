@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="layout/basic" xmlns:type="http://www.w3.org/1999/xhtml">
+      layout:decorate="layout/basic">
 <link rel="stylesheet" href="/static/css/board.css">
-
+<link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown-light.min.css"
+        integrity="sha512-zb2pp+R+czM7GAemdSUQt6jFmr3qCo6ikvBgVU6F5GvwEDR0C2sefFiPEJ9QUpmAKdD5EqDUdNRtbOYnbF/eyQ=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+/>
 
 <style>
+
     div {
         display: block;
     }
@@ -87,51 +94,66 @@
         z-index: 2;
         position: relative;
     }
-.answer-btn-row
+    .answer-btn-row
     {
-    padding: 0 4px 0 8px;
-    margin: 0;
-    display: flex;
-    list-style: none;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    height: 44px;
-    border-bottom: 1px solid hsl(210,8%,75%);
+        padding: 0 4px 0 8px;
+        margin: 0;
+        display: flex;
+        list-style: none;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        height: 44px;
+        border-bottom: 1px solid hsl(210,8%,75%);
     }
+
+
 </style>
 <th:block layout:fragment="title">
     <title>상세 페이지</title>
 </th:block>
 <body>
 <div class="grid-container">
-<div class="left"></div>
-<div class="center">
-<th:block layout:fragment="content">
-    <div class="container">
-        <div>
+    <div class="left"></div>
+    <div class="center">
+        <th:block layout:fragment="content">
+            <div class="container">
+                <div>
 
-            <h1 th:text="${asks.title}"></h1>
-            <p th:text="${asks.contents}"></p>
-            <p th:text="${asks.no}"></p>
-            <p th:text="${asks.tags}"></p>
+                    <h1 th:text="${asks.title}"></h1>
+                    <pre th:text="${asks.contents}"></pre>
+                    <p th:text="${asks.no}"></p>
+                    <p th:text="${asks.tags}"></p>
 
 
-        </div>
-    </div>
-
-</th:block>
-//save comment
-
+<<<<<<< HEAD
 <br/>
 <div class="card">
     <div class="card-header">comment list</div>
     <ul calss="list-group">
         <li class="list-group-item d-flex">
+
+                </ul></div>
+            </div>
+            </div>
+        </th:block>
+        //save comment
+
+        <br/>
+        <div class="card">
+            <div class="card-header">comment list</div>
+            <ul calss="list-group">
+                <li class="list-group-item d-flex">
+
             <span th:each="comment: ${comment}" th:if="${comment.selected==1}" >
                 <div id="comment_box" class="selected">
-                  <p>writer : gongchamcham </p>
+
+                  <p th:text="${comment.getWriter().getName()}"></p>
                 <p th:text="${comment.commentNo}"></p>
+
                   <p th:utext="${@commonUtil.markdown(comment.reply)}" th:rows="4"></p>
+
+                   <pre th:utext="${@commonUtil.markdown(comment.reply)}" th:rows="4" class="markdown-body"></pre>
+
                 </div>
                   <hr>
                 <br><br>
@@ -139,7 +161,7 @@
 
 
 
-                <span th:each="comment: ${comment}" th:if="${comment.depth==0}">
+                    <span th:each="comment: ${comment}" th:if="${comment.depth==0}">
 
 
 
@@ -148,41 +170,63 @@
                             <p th:text="${comment.commentNo}"></p>
 
                      <p th:utext="${@commonUtil.markdown(comment.reply)}" th:rows="4"></p>
+
+
+                            <p th:text="${comment.getWriter().getName()}"> writer:</p>
+                            <p th:text="${comment.commentNo}"></p>
+
+                    <pre th:utext="${@commonUtil.markdown(comment.reply)}" th:rows="4" class="markdown-body"></pre>
+
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary">modify</button>
-                    <form th:action="@{|/questions/comment/delete/${comment.commentNo}|}">
+                    <form th:action="@{|/questions/comment/delete/${comment.commentNo}|}" th:if="${comment.getWriter().getNo()==1}">
 
                         <button type="submit" class="btn btn-primary">delete</button>
                     </form>
 
 
-                        <form th:action="@{|/questions/comment/selected/${comment.commentNo}|}" method="post">
+                        <form th:action="@{|/questions/comment/selected/${comment.commentNo}|}" method="post" th:if="${comment.getWriter().getNo()==1}">
                                 <button type="submit" class="btn btn-primary">selected</button>
                         </form>
 
+
                          <form th:action="@{|/questions/comment/${asks.no}/reply|}" method="post">
+
+                         <form th:action="@{|/questions/comment/${asks.no}/reply|}" method="post" >
+
                             <input type="text" name="reply" placeholder="reply"/>
                             <input type="hidden" name="commentGroup" th:value="${comment.commentNo}"/>
                             <button type="submit" class="btn btn-primary">reply</button>
                         </form>
+                         </form>
                     </div>
 
                     <span th:each="reply: ${reply}" th:if="${reply.commentGroup == comment.commentNo}" class="reply">
 
                     <div class="reply">
+
                          <div> writer : gongchamcham</div>
                             <p th:text="${reply.commentNo}"></p>
                      <p th:utext="${@commonUtil.markdown(reply.reply)}" th:rows="4"></p>
+
+                        <p th:text="${reply.getWriter().getName()}"> writer:</p>
+                            <p th:text="${reply.commentNo}"></p>
+                        <p th:utext="${@commonUtil.markdown(reply.reply)}" class="markdown-body"  th:rows="4"></p>
+
 
 
 
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary">modify</button>
-                             <form th:action="@{|/questions/comment/delete/${reply.commentNo}|}">
+                            <!--delete comment -->
+
+
+                             <form th:action="@{|/questions/comment/delete/${reply.commentNo}|}" th:if="${reply.getWriter().getNo()==1}">
+                                 <!-- th:if="${reply.getMember().getNo()==SesstionLogin}"> -->
                                  <button type="submit" class="btn btn-primary">delete</button>
                              </form>
 
-                            <form th:action="@{|/questions/comment/selected/${reply.commentNo}|}" method="post">
+                            <form th:action="@{|/questions/comment/selected/${reply.commentNo}|}" method="post" th:if="${reply.getWriter().getNo()==1}">
                                 <button type="submit" class="btn btn-primary">selected</button>
                             </form>
 
@@ -199,66 +243,76 @@
             </span>
 
 
-</li>
-</ul>
-<div class="answer-box">
-    <div id="answer-btn-bar" class="btn-group">
-        <ul id="answer-btn-row" class="answer-btn-row">
-            <button type="button" class="up-button" id="bold-button" title="Strong <strong> Ctrl+B">
-                <span style="background-position: 0px 0px;">B</span></button>
-            <button class="up-button" id="italic-button" title="Emphasis <em> Ctrl+I">
-                <span style="background-position: -20px 0px;">I</span></button>
-            <button class="up-button" id="link-button" title="Hyperlink <a> Ctrl+L">
-                <span style="background-position: -40px 0px;">L</span></button>
-            <button class="up-button" id="quote-button" title="Blockquote <blockquote> Ctrl+Q">
-                <span style="background-position: -60px 0px;">"</span>
-            </button>
-            <button class="up-button" id="code-button" title="Code Sample <pre><code> Ctrl+K">
-                <span style="background-position: -80px 0px;">{}</span>
-            </button>
+                </li>
+            </ul>
+            <div class="answer-box">
+                <div id="answer-btn-bar" class="btn-group">
+                    <ul id="answer-btn-row" class="answer-btn-row">
+                        <button type="button" class="up-button" id="bold-button" title="Strong <strong> Ctrl+B">
+                            <span style="background-position: 0px 0px;">B</span></button>
+                        <button class="up-button" id="italic-button" title="Emphasis <em> Ctrl+I">
+                            <span style="background-position: -20px 0px;">I</span></button>
+                        <button class="up-button" id="link-button" title="Hyperlink <a> Ctrl+L">
+                            <span style="background-position: -40px 0px;">L</span></button>
+                        <button class="up-button" id="quote-button" title="Blockquote <blockquote> Ctrl+Q">
+                            <span style="background-position: -60px 0px;">"</span>
+                        </button>
+                        <button class="up-button" id="code-button" title="Code Sample <pre><code> Ctrl+K">
+                            <span style="background-position: -80px 0px;">{}</span>
+                        </button>
 
-            <button class="up-button" id="image-button" title="Image <img> Ctrl+G">
-                <span style="background-position: -100px 0px;">image</span>
-            </button>
+                        <button class="up-button" id="image-button" title="Image <img> Ctrl+G">
+                            <span style="background-position: -100px 0px;">image</span>
+                        </button>
 
-            <button class="up-button" id="snippet-button" title="JavaScript/HTML/CSS snippet Ctrl-M">
-                <span>snippet</span>
-            </button>
+                        <button class="up-button" id="snippet-button" title="JavaScript/HTML/CSS snippet Ctrl-M">
+                            <span>snippet</span>
+                        </button>
 
-        </ul>
+                    </ul>
+
 
     </div>
     <form th:action="@{|/questions/comment/${asks.no}|}" method="post" id="reply-submit">
         <div id="comment-write">
+
+                </div>
+                <form th:action="@{|/questions/comment/${asks.no}|}" method="post" id="replySubmit">
+                    <div id="comment-write1">
+
                 <textarea id="wmd-input" name="reply" class="wmd-input s-input bar0 js-post-body-field processed"
                           data-editor-type="wmd" data-post-type-id="2" cols="92" rows="15"
                           aria-labelledby="your-answer-header" tabindex="101" data-min-length=""></textarea>
 
-            <button type="submit">댓글 등록</button>
+                        <button type="submit">댓글 등록</button>
+                    </div>
+                </form>
+                </form>
+            </div>
+
+
         </div>
-    </form>
-
+    </div>
+    <div class="right"></div>
 </div>
-
-
-</div>
-</div>
-<div class="right"></div>
-</div>
-
 <div class="bottom-nav">
-<div>
-    <p> k.knock</p>
-    <p> k.knock</p>
-    <p> k.knock</p>
-    <p> k.knock</p>
-    <p> k.knock</p>
-</div>
+    <div>
+        <p> k.knock</p>
+        <p> k.knock</p>
+        <p> k.knock</p>
+        <p> k.knock</p>
+        <p> k.knock</p>
+    </div>
 
 
 </div>
 </body>
 <script>
+
+
+
+
+
     let markdownText = document.getElementById("wmd-input").value;
 
     function marked(markdownText) {
@@ -297,13 +351,23 @@
     document.getElementById("code-button").addEventListener("click", function() {
         const editor = document.getElementById("wmd-input");
         const selectedText = editor.value.substring(editor.selectionStart, editor.selectionEnd);
-        const newText = "` <code> " + selectedText + "`";
+        const newText = "``` <code> " + selectedText + "  ```";
         editor.value = editor.value.substring(0, editor.selectionStart) + newText + editor.value.substring(editor.selectionEnd);
     });
 
+
     document.getElementById("reply-submit").addEventListener("submit", function(event) {
+    //엔터 인식
+    document.getElementById("replySubmit").addEventListener("submit", function(event) {
         event.preventDefault();
         let markdownText = document.getElementById("wmd-input").value;
+
+        /*let str = document.getElementById("wmd-input").value;
+         console.log("hello");
+         str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+         document.getElementById("wmd-input").value = str;
+         console.log(str);
+ */
 
         function marked(markdownText) {
             return "";
@@ -312,7 +376,67 @@
         document.getElementById("wmd-input").innerHTML = marked(markdownText);
         // form submit
         this.submit();
+
+    });})
+
+
+
+
+</script>
+<script type="text/javascript">
+    //<p id="reply" th:text="${asks.reply}"></p> 의 값 가져오기
+
+
+
+
+    /*document.getElementById('hide_more_button').addEventListener("click", function() {
+        document.getElementById('reply').style.display = 'none';
+        document.getElementById('show_more_button').style.display = 'block';
+        document.getElementById('hide_more_button').style.display = 'none';
+        console.log("hide");
     });
+    document.getElementById('show_more_button').addEventListener("click", function() {
+        document.getElementById('reply').style.display = 'block';
+        document.getElementById('show_more_button').style.display = 'none';
+        document.getElementById('hide_more_button').style.display = 'block';
+        console.log("hide");
+    });*/
+    if(document.getElementById('replyButton')) {
+        document.getElementById('replyButton').addEventListener("click", function () {
+            console.log("reply");
+            const form = document.createElement("form");
+            form.setAttribute("th:action", "@{|/questions/comment/${asks.no}/reply|}");
+            form.setAttribute("method", "post");
+
+            const textarea = document.createElement("textarea");
+            textarea.setAttribute("name", "reply");
+            textarea.setAttribute("class", "wmd-input s-input bar0 js-post-body-field processed");
+            textarea.setAttribute("data-editor-type", "wmd");
+            textarea.setAttribute("data-post-type-id", "2");
+            textarea.setAttribute("cols", "92");
+            textarea.setAttribute("rows", "15");
+            textarea.setAttribute("aria-labelledby", "your-answer-header");
+            textarea.setAttribute("tabindex", "101");
+            textarea.setAttribute("data-min-length", "");
+
+            const input = document.createElement("input");
+            input.setAttribute("type", "hidden");
+            input.setAttribute("name", "commentGroup");
+            input.setAttribute("th:value", "${comment.commentNo}");
+
+            const button = document.createElement("button");
+            button.setAttribute("type", "submit");
+            button.setAttribute("class", "btn btn-primary");
+            button.innerHTML = "답글등록";
+
+            form.appendChild(textarea);
+            form.appendChild(input);
+            form.appendChild(button);
+
+            document.getElementById("replyArea").appendChild(form);
+        });
+    }
+
 
 
 
@@ -320,5 +444,7 @@
 
 
 </script>
+
+</body>
 
 </html>

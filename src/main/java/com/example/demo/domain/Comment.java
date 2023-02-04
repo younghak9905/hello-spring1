@@ -35,8 +35,12 @@ public class Comment{
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-@JoinColumn(name = "ask_No")
+    @JoinColumn(name = "ask_No")
     private Ask ask;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "writer_No")
+    private Member member;
 
     public void update(Long commentGroup) {
         this.commentGroup = commentGroup;

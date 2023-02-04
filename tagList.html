@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>태그리스트</title>
+</head>
+<body>
+<!--tagList굿!!!!!!!-->
+<table>
+    <thead>
+    <tr>
+        <th>태그</th>
+    </tr>
+    </thead>
+    <tbody>
+    <span th:each="asks:${asks}">
+                <tr>
+                    <td>
+                        <a th:text="${asks.title}" th:href="@{'/questions/'+${asks.no}}"></a>
+                    </td>
+                    <td th:text="${asks.contents}"></td>
+                    <td th:text="${asks.tags}"></td>
+                </tr>
+            </span>
+    </tbody>
+</table>
+</body>
+</html>

@@ -38,4 +38,9 @@ public class MemberController {
         memberService.join(requestDto);
         return "redirect:/";
     }
+
+    @GetMapping(value="/memberPage")
+    public String memberPage() {
+        return "/members/memberPage";
+    }
 }

@@ -2,10 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.Ask;
 import com.example.demo.domain.Comment;
+import com.example.demo.domain.Member;
 import com.example.demo.dto.AskRequestDto;
 import com.example.demo.dto.AskResponseDto;
 import com.example.demo.dto.CommentResponseDto;
+import com.example.demo.repository.AskRepository;
 import com.example.demo.repository.CommentRepository;
+import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.AskService;
 import com.example.demo.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +29,10 @@ public class QuestionController {
     private final AskService askService;
     private final CommentService commentService;
     private final CommentRepository commentRepository;
+    private final Long writer_no = 1L;
 
+
+    private final MemberRepository memberRepository;
 
     @GetMapping(value = "/new")
     public String createForm() {
@@ -34,6 +40,9 @@ public class QuestionController {
     }
     @PostMapping(value="/new/questionList")
     public String create(AskRequestDto requestDto) {
+
+        Optional<Member> member =memberRepository.findByNo(writer_no);
+        requestDto.setWriter(member.get());
         askService.write(requestDto);
        return "redirect:/questions/questionList";
     }
@@ -48,6 +57,7 @@ public class QuestionController {
     @GetMapping(value="/{no}")
     public String detail(Model model , @PathVariable("no") Long no) {
         AskResponseDto ask = askService.findAsk(no);
+
         List<CommentResponseDto> comments = ask.getComments();
         List<CommentResponseDto> reply = ask.getComments();
 
@@ -72,7 +82,15 @@ public class QuestionController {
     @GetMapping(value="/{no}/edit")
     public String editForm(Model model, @PathVariable("no") Long no) {
         Ask ask = askService.findOne(no).get();
+
         model.addAttribute("ask", ask);
+
+        if(ask.getMember().getNo() != writer_no)
+        {
+            return "redirect:/questions"+no;
+
+        }
+
         return "/questions/edit";
     }
     //내가 손댄 부분!!!!!!!!!!!!!!!!
