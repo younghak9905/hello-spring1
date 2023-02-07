@@ -93,7 +93,6 @@ public class JpaAskRepository implements AskRepository {
     }
 
 
-
     @Override
     public List<Ask> findAll(Sort sort) {
 

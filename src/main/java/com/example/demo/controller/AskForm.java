@@ -51,6 +51,4 @@ public class AskForm {
     public LocalDateTime getCreatedDate() {
         return LocalDateTime.now();
     }
-
-
 }

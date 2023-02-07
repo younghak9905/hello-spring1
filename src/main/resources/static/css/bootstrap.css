@@ -3762,6 +3762,7 @@ textarea.form-control-lg {
 }
 
 .navbar {
+
   --bs-navbar-padding-x: 0;
   --bs-navbar-padding-y: 0.5rem;
   --bs-navbar-color: rgba(0, 0, 0, 0.55);
@@ -3789,6 +3790,7 @@ textarea.form-control-lg {
   justify-content: space-between;
   padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x);
 }
+
 .navbar > .container,
 .navbar > .container-fluid,
 .navbar > .container-sm,
@@ -3833,6 +3835,7 @@ textarea.form-control-lg {
 }
 .navbar-nav .dropdown-menu {
   position: static;
+
 }
 
 .navbar-text {
