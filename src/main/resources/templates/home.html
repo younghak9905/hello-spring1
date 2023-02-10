@@ -2,14 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
-<link rel="stylesheet"type="text/js" href="/js/bootstrap.js">
+<link rel="stylesheet"type="text/js" href="/js/board.js">
 <link rel="stylesheet" type="text/css" href="/css/board.css">
 
 <head>
+
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<!--
 <nav>
     <div class="container">
         <div class="top_nav">
@@ -25,12 +27,45 @@
             </nav>
         </div>
     </div>
-</nav>
+</nav>-->
+
+<div class="top" >
+
+    <nav class="navbar navbar-expand-lg bg-light" style="background-color: #20c997">
+        <div class="container-fluid">
+            <a class="navbar-brand" style="color: #1a1e21!important;" href="#">K.Knock</a>
+            <!--<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" style="color: black!important;" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: #1a1e21!important;" href="/members">회원목록</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" style="color: #1a1e21!important; " href="/questions/questionList">질문목록</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: #1a1e21!important " href="/questions/new">질문 작성</a>
+                </li>
+            </ul>
+            <form action="/search" name="search" class="d-flex" role="search" method="post">
+                <input class="form-control me-2" type="text" placeholder="Search" name="search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+
+    </nav>
+
 </div>
+
 <div class="dropdown">
     <button class="dropbtn" type="button">
-                 <span
-                         class="dropbtn_icon">Tags</span>
+        <span class="dropbtn_icon">Tags</span>
     </button>
     <ul class="dropdown-content">
         <li><a href="/questions/tagList?tags=pawnable">Pawnable</a></li>
@@ -39,5 +74,37 @@
         <li><a href="/questions/tagList?tags=Crypto">Crypto</a></li>
     </ul>
 </div>
+
+<!--이전에 만든 카드  -->
+
+<div id="container_1">
+    <div class="card">
+            <img  src="https://dreamhack.io/assets/img/rank_1.a680c13.svg"  style="width: 40px;height: 85px;" alt="1등">
+        <div class="words">
+        <p style="font-size: large;
+        font-style:inherit; font-weight:bold;
+        color: #fff;">답변왕 1등</p>
+        </div>
+    </div>
+    <div class="card">
+            <img  src="https://dreamhack.io/assets/img/rank_2.4646dca.svg"  style="width: 40px;height: 85px;" alt="2등">
+        <div class="words">
+        <p style="font-size: large;
+        font-style:inherit; font-weight:bold;
+        color: #fff;">답변왕 2등</p>
+        </div>
+    </div>
+    <div class="card">
+        <img  src="https://dreamhack.io/assets/img/rank_3.0ca5d36.svg" style="width: 40px;height: 85px;" alt="3등">
+        <div class="words">
+            <p style="font-size: large;
+        font-style:inherit; font-weight:bold;
+        color: #fff;">답변왕 3등</p>
+        </div>
+    </div>
+</div>
+
+
+
 </body>
 </html>
