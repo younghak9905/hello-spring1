@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultrag.net.nz/thymeleaf.layout"
+layout:decorator="layout/default_layout">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<th:block layout:fragment="content">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-5">
+        <div class="card shadow-lg border-0 rounded-lg mt-5">
+          <div class="card-header">
+            <h3 class="text-center font-weight-light my-4">Login</h3>
+          </div>
+          <div class="card-body">
+            <form id="frm" name="frm" action="/login/action" method="post">
+              <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+              <div th:if="${param.error}">
+                <p th:text="${exception}" class="alert alert-danger"></p>
+              </div>
+              <div class="form-floating mb-3">
+                <input class="form-control" id="userid" name="userid" type="text" placeholder="id" required/>
+              </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="password" name="password" type="password" placeholder="Password" required/>
+                </div>
+              <div class="form-check mb-3">
+                <input class="form-check-input" id="remember-me" name="remember-me" type="checkbox"/>
+                <label class="form-check-label" for="remember-me">Remember Password</label>
+              </div>
+              <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                <a class="btn btn-primary" href="javascript:fnSubmit();">Login</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    let frm;
+
+    $(function(){
+      frm = $('#frm');
+      $('#password').on('keyup',function(e){
+        if(e.key=="Enter") fnSubmit();
+      });
+      frm.validate({
+        submitHandler:function(form){
+          form.submit();
+        }
+      });
+    });
+
+    function fnSubmit(){
+      frm.submit();
+    }
+    </script>
+</th:block>
+</html>

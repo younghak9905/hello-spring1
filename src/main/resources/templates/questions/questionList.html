@@ -4,96 +4,76 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/css/board.css">
-<link rel="stylesheet" type="text/css" href="/css/questionList.css">
+<!--<link rel="stylesheet" type="text/css" href="/css/questionList.css">-->
+<head> <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/top.js"></script>
+</head>
+<style>
+   .contents{
+
+        overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break:break-all;
 
 
+       height: 30px;
+
+    }
+</style>
 <body>
 <div class="top">
 
 
-
-
-
-
-
-    <nav class="navbar navbar-expand-lg bg-light" style="background-color: #20c997">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">K.Knock</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/members">회원목록</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/questions/questionList">질문목록</a>
-                    </li>
-                    <!--
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/qeustionList" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            질문목록
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>-->
-                    <li class="nav-item">
-                        <a class="nav-link" href="/questions/new">질문 작성</a>
-                    </li>
-                </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
-        </div>
-    </nav>
-
 </div>
-<div class="grid-container"></div>
-<div class="left"></div>
+<div class="gap"></div>
+<div class="grid-container">
+    <div class="left">
+        <div class="dropdown">
+            <button class="dropbtn" type="button">
+                 <span
+                         class="dropbtn_icon">Tags</span>
+            </button>
+            <ul class="dropdown-content">
+                <li><a href="/questions/tagList?tags=C">C</a></li>
+                <li><a href="/questions/tagList?tags=Pawnable">Pawnable</a></li>
+                <li><a href="/questions/tagList?tags=Reversing">Reversing</a></li>
+                <li><a href="/questions/tagList?tags=Web">Web</a></li>
+                <li><a href="/questions/tagList?tags=Crypto">Crypto</a></li>
+            </ul>
+        </div>
+    </div>
 <div class="center">
 <div class="container">
     <div>
-        <table>
-            <thead>
-            <tr>
-                <th>제목</th>
-                <th>내용</th>
-            </tr>
-            </thead>
-            <tbody>
-            //ask list
+
+
+
+            <br>
+
             <span th:each="ask : ${asks}">
                 <div class="questionList">
-                <p>
                     <a th:text="${ask.title}" th:href="@{'/questions/'+ ${ask.no}}" class="title"></a>
 
                 <span class="text-danger small ms-2"
                       th:if="${#lists.size(ask.comment) > 0}"
                    th:text="${#lists.size(ask.comment)}"></span>
-                </p>
-                <p th:text="${ask.contents}"></p>
+
+                <p th:text="${ask.contents}" class="contents"></p>
                 <p th:text="${ask.tags}" ></p>
                 <p th:text="${ask.createdDate}" style="float: right"></p>
-                <hr>
+                <br>
+                    <hr>
+
                 </div>
             </span>
-            </tbody>
-        </table>
+
+
     </div>
 </div>
 </div>
 
 <div class="right"></div>
+</div>
 </body>
 </html>

@@ -58,4 +58,30 @@ public class MemberController {
 
         return "/members/memberPage";
     }
+
+
+    @GetMapping("/login")
+    public String login() {
+        return "/members/login";
+    }
+
+    @GetMapping("/login/error")
+    public String loginError(Model model){
+        model.addAttribute("loginError", true);
+        return "/members/login";
+    }
+    @PostMapping("login/action")
+    public String loginAction( String id,
+                              String password,
+                              Model model) {
+        Member member = memberService.login(id, password);
+        if (member == null) {
+            model.addAttribute("loginError", true);
+            System.out.println("로그인 실패");
+            return "/members/login";
+        }
+        System.out.println("로그인 성공");
+        return "redirect:/";
+    }
+
 }

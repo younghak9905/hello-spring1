@@ -51,5 +51,7 @@ public class Comment{
     }
 
 
-
+    public Member getWriter() {
+        return member;
+    }
 }

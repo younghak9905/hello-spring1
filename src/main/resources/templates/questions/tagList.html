@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/board.css">
+<link rel="stylesheet"type="text/js" href="/js/board.js">
+<link rel="stylesheet" href="/css/bootstrap.css">
+<head> <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/top.js"></script>
+</head>
+<style>
+    .contents{
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-break:break-all;
+
+
+        height: 30px;
+
+    }
+</style>
+<body>
+<!--tagList굿!!!!!!!-->
+
+<div class="top">
+
+</div>
+<div class="left">
+    <div class="dropdown">
+        <button class="dropbtn" type="button">
+                 <span
+                         class="dropbtn_icon">Tags</span>
+        </button>
+        <ul class="dropdown-content">
+            <li><a href="/questions/tagList?tags=C">C</a></li>
+            <li><a href="/questions/tagList?tags=Pawnable">Pawnable</a></li>
+            <li><a href="/questions/tagList?tags=Reversing">Reversing</a></li>
+            <li><a href="/questions/tagList?tags=Web">Web</a></li>
+            <li><a href="/questions/tagList?tags=Crypto">Crypto</a></li>
+        </ul>
+    </div>
+</div>
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>태그</th>
+    </tr>
+    </thead>
+    <tbody>
+    <span th:each="asks:${asks}">
+                <tr>
+                    <td>
+                        <a th:text="${asks.title}" th:href="@{'/questions/'+${asks.no}}"></a>
+                    </td>
+                    <td th:text="${asks.contents}" class="contents"></td>
+                    <td th:text="${asks.tags}"></td>
+                </tr>
+            </span>
+    </tbody>
+</table>
+</body>
+</html>

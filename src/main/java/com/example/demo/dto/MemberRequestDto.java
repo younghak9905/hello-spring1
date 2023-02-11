@@ -19,7 +19,7 @@ public class MemberRequestDto {
     private String id;
     private String github;
     private String blog;
-
+    private Long score;
 
     public Member toEntity() {
         Member member =Member.builder()
@@ -30,6 +30,7 @@ public class MemberRequestDto {
                 .id(id)
                 .github(github)
                 .blog(blog)
+                .score(score)
                 .build();
         return member;
 

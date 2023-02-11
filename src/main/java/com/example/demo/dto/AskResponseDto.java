@@ -19,6 +19,9 @@ public class AskResponseDto {
     private String tags;
     private String  createdDate;
     private Member writer;
+
+    private boolean anonymous;
+
     private List<CommentResponseDto> comments;
 //Entity->Dto
     public AskResponseDto(Ask entity) {
@@ -27,6 +30,7 @@ public class AskResponseDto {
         this.contents = entity.getContents();
         this.tags = entity.getTags();
         this.writer = entity.getMember();
+   this.anonymous = entity.isAnonymous();
         this.comments = entity.getComment().stream()
                 .map(CommentResponseDto::new)
                 .collect(Collectors.toList());

@@ -20,6 +20,8 @@ public class AskRequestDto {
     private String createdDate;
     private Member writer;
     private String tags;
+
+    private boolean anonymous;
     public Ask toEntity() {
         Ask ask = Ask.builder()
                 .no(no)
@@ -27,6 +29,7 @@ public class AskRequestDto {
                 .contents(contents)
                 .tags(tags)
                 .member(writer)
+                .anonymous(anonymous)
                 .build();
         return ask;
     }

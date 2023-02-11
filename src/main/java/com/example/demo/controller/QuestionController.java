@@ -37,9 +37,10 @@ public class QuestionController {
     }
     @PostMapping(value="/new/questionList")
     public String create(AskRequestDto requestDto) {
-  
+
         Optional<Member> member =memberRepository.findByNo(writer_no);
         requestDto.setWriter(member.get());
+
         askService.write(requestDto);
         return "redirect:/questions/questionList";
     }
@@ -74,19 +75,44 @@ public class QuestionController {
 
       return "questions/view";
     }
-    @GetMapping(value="/{no}/edit")
-    public String editForm(Model model, @PathVariable("no") Long no) {
-        Ask ask = askService.findOne(no).get();
-        model.addAttribute("ask", ask);
-
-
-        if(ask.getMember().getNo() != writer_no)
+    @GetMapping(value="/edit/{no}")
+    public String edit(@PathVariable("no") Long no, Model model) {
+        AskResponseDto ask = askService.findAsk(no);
+        if(ask.getWriter().getNo() == writer_no)
         {
-            return "redirect:/questions"+no;
+            model.addAttribute("asks", ask);
+            return "/questions/edit";
+
 
         }
 
-        return "/questions/edit";
+
+        return "redirect:/questions"+no;
+    }
+
+
+    @PostMapping(value="/new/edit/{no}")
+    public String update(@PathVariable("no") Long no, AskRequestDto requestDto) {
+
+
+        askService.edit(no, requestDto);
+        return "redirect:/questions/questionList";
+    }
+
+
+    @PostMapping(value="/delete/{no}")
+    public String delete(@PathVariable("no") Long no) {
+        AskResponseDto ask= askService.findAsk(no);
+        List<CommentResponseDto> comments = ask.getComments();
+
+        if(ask.getWriter().getNo() == writer_no)
+        {
+            askService.delete(no);
+            return "redirect:/questions/questionList";
+
+        }
+
+        return "redirect:/questions"+no;
     }
 
 }

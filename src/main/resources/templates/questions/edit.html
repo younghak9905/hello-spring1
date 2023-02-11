@@ -1,57 +1,98 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="javascript" href="/static/js/input.js">
-<link rel="stylesheet" href="/static/css/board.css">
-//edit comment
+<head> <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/top.js"></script>
+</head>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+<!-- include summernote css/js -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="/js/summer.js"></script>
+<style>
+    .left{
+        grid-column: 1/3;
+    }
+    .center {
+
+        grid-column: 2 / 3; /* spans the second column */
+    }
+    .right {
+        grid-column: 3/ 3; /* spans the third column */
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: 20% 55% 25%; /* sets the width of each column */
+    }
+    ul{
+        padding: 0;
+    }
+    li{
+        display: inline-block;
+    }
+</style>
+<head>
+
+    <title>Title</title>
+</head>
 <body>
+<div class="top">
 
-<div class="container">
-    <div>
-       <textarea name="reply" class="wmd-input s-input bar0 js-post-body-field processed"
-                 data-editor-type="wmd" data-post-type-id="2" cols="92" rows="15"
-                 aria-labelledby="your-answer-header" tabindex="101" data-min-length=""  th:placeholder=""></textarea>
+
+
+</div>
+
+<div class="left">
+    <div class="dropdown">
+        <button class="dropbtn" type="button">
+                 <span
+                         class="dropbtn_icon">Tags</span>
+        </button>
+        <ul class="dropdown-content">
+            <li><a href="/questions/tagList?tags=C">C</a></li>
+            <li><a href="/questions/tagList?tags=Pawnable">Pawnable</a></li>
+            <li><a href="/questions/tagList?tags=Reversing">Reversing</a></li>
+            <li><a href="/questions/tagList?tags=Web">Web</a></li>
+            <li><a href="/questions/tagList?tags=Crypto">Crypto</a></li>
+        </ul>
     </div>
+</div>
+<div class="center">
+    <div style="height: 50px;"></div>
 
-
-    <div class="answer-box">
-        <div id="answer-btn-bar" class="btn-group">
-            <ul id="answer-btn-row" class="answer-btn-row">
-                <button type="button" class="up-button" id="bold-button" title="Strong <strong> Ctrl+B">
-                    <span style="background-position: 0px 0px;">B</span></button>
-                <button class="up-button" id="italic-button" title="Emphasis <em> Ctrl+I">
-                    <span style="background-position: -20px 0px;">I</span></button>
-                <button class="up-button" id="link-button" title="Hyperlink <a> Ctrl+L">
-                    <span style="background-position: -40px 0px;">L</span></button>
-                <button class="up-button" id="quote-button" title="Blockquote <blockquote> Ctrl+Q">
-                    <span style="background-position: -60px 0px;">"</span>
-                </button>
-                <button class="up-button" id="code-button" title="Code Sample <pre><code> Ctrl+K">
-                    <span style="background-position: -80px 0px;">{}</span>
-                </button>
-
-                <button class="up-button" id="image-button" title="Image <img> Ctrl+G">
-                    <span style="background-position: -100px 0px;">image</span>
-                </button>
-
-                <button class="up-button" id="snippet-button" title="JavaScript/HTML/CSS snippet Ctrl-M">
-                    <span>snippet</span>
-                </button>
-
-            </ul>
-
-        </div>
-        <form th:action="@{|/questions/comment/${asks.no}|}" method="post" id="replySubmit">
-            <div id="comment-write">
-                <textarea id="wmd-input" name="reply" class="wmd-input s-input bar0 js-post-body-field processed"
-                          data-editor-type="wmd" data-post-type-id="2" cols="92" rows="15"
-                          aria-labelledby="your-answer-header" tabindex="101" data-min-length=""></textarea>
-
-                <button type="submit">댓글 등록</button>
+    <div style="display:flex; align-items: center; justify-content: center;">
+        <form th:action="@{'/questions/new/edit/'+${asks.no}}" method="post" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; ">
+                <input type="text" id="title" name="title" th:value="${asks.title}" style="border-radius: 5px; width: 396%; padding:5px;">
             </div>
+            <div style="height: 5px;"></div>
+            <div class="answer-box">
+
+                <div class="pt-1">
+
+                    <textarea class="summernote" id="wmd-input" name="contents" th:text="${asks.contents}" style="width: 200%; height: 300%; tab-size: 10;"></textarea>
+                </div>
+                <div style="margin: 10px;">
+                    <label for="tags" style="font-size: 18px;">태그 : </label>
+                    <select id="tags" name="tags" style="width: 100%; height: 30px; font-size: 18px;">
+                        <option value="C">C</option>
+                        <option value="Network">Network</option>
+                        <option value="Web">Web</option>
+                        <option value="Reversing">Reversing</option>
+                        <option value="Pawnable">Pawnable</option>
+                        <option value="Crypto">Crypto</option>
+                        <option value="Misc">Misc</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" id="write" style="width: 50%; height: 30px; font-size: 18px;">수정</button>
         </form>
-
     </div>
-
+</div>
+<div class="right"></div>
+</div>
+</body>
 
 </html>

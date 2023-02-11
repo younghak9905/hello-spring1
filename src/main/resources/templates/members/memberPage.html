@@ -1,6 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" type="text/css" href="/css/board.css">
+<head> <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/top.js"></script>
+</head>
+<link rel=stylesheet type="text/css" href="/css/board.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/bootstrap.css">
 <style>
     .stat-box{
         border-right: 1px solid hsl(210,8%,65%);
@@ -14,10 +19,27 @@
 <body>
 
 
-<div class="top"></div>
+<div class="top">
+</div>
+<div class="gap"></div>
 <div class="grid-container">
-    <div class="left"></div>
+    <div class="left">
+        <div class="dropdown">
+            <button class="dropbtn" type="button">
+                 <span
+                         class="dropbtn_icon">Tags</span>
+            </button>
+            <ul class="dropdown-content">
+                <li><a href="/questions/tagList?tags=C">C</a></li>
+                <li><a href="/questions/tagList?tags=Pawnable">Pawnable</a></li>
+                <li><a href="/questions/tagList?tags=Reversing">Reversing</a></li>
+                <li><a href="/questions/tagList?tags=Web">Web</a></li>
+                <li><a href="/questions/tagList?tags=Crypto">Crypto</a></li>
+            </ul>
+        </div>
+    </div>
     <div class="center">
+
 <div class="container">
     <div class="profile">
     <div class="profile-img">
@@ -37,7 +59,7 @@
             <a th:text="${member.github}" th:href="${member.github}">github</a>
             <a th:text="${member.blog}" th:href="${member.blog}">blog</a>
         </div>
-
+<br><br><hr>
         <div class="badges">
             <h2>Badge</h2>
             <p>badges</p>
@@ -48,7 +70,7 @@
 
     <div class="activity">
         <h2>활동</h2>
-        <span th:each="ask : ${ask}">
+        <span th:each="ask : ${ask}" th:if="${ask.anonymous==false}">
             <div class="ask">
                 <a th:text="${ask.title}" th:href="@{'/questions/'+${ask.no}}"></a>
             </div>

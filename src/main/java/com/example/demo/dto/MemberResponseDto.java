@@ -15,7 +15,7 @@ public class MemberResponseDto {
     private String id;
     private String github;
     private String blog;
-
+    private Long score;
     private List<CommentResponseDto> comments;
     private List<AskResponseDto> ask;
 
@@ -27,6 +27,7 @@ public class MemberResponseDto {
         this.id = entity.getId();
         this.github = entity.getGithub();
         this.blog = entity.getBlog();
+        this.score = entity.getScore();
 
         this.comments = entity.getComment().stream()
                 .map(CommentResponseDto::new)

@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.domain.Ask;
 import com.example.demo.domain.Comment;
+import com.example.demo.domain.Member;
 import com.example.demo.dto.CommentRequestDto;
 import com.example.demo.dto.CommentResponseDto;
 import com.example.demo.repository.AskRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -45,10 +47,17 @@ public class CommentService {
         List<Comment> comments = commentRepository.findByCommentGroup(commentNo);
         if(comments.size() != 0){
             for(Comment comment : comments){
+                if(Objects.equals(comment.getSelected(), "true")){
+                    Member member = comment.getWriter();
+                    member.setScore(member.getScore()-100);
+                }
                 commentRepository.delete(comment);
             }
         }
-
+        if(Objects.equals(parent.getSelected(), "true")){
+            Member member = parent.getWriter();
+            member.setScore(member.getScore()-100);
+        }
         commentRepository.delete(parent);
         return parent.getAsk().getNo();
     }
@@ -92,12 +101,15 @@ public class CommentService {
 
         if(AlreadySelected != null){
             AlreadySelected.setSelected("false");
+            Member AlreadyMember=AlreadySelected.getMember();
+            AlreadyMember.setScore(AlreadyMember.getScore()-100);
             System.out.print("채택된 댓글이 있습니다.!!!!!!");
         }else{
             System.out.print("채택된 댓글이 없습니다!!!!!!!!");
         }
         comment.setSelected("true");
-
+        Member member=comment.getMember();
+        member.setScore(member.getScore()+100);
         return askNo;
     }
 

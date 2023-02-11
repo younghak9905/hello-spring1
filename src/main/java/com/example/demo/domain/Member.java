@@ -25,7 +25,7 @@ public class Member {
 
     private String blog;
 
-
+    private Long score;
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Ask> ask = Collections.emptyList();
 

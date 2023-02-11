@@ -28,10 +28,13 @@ public class Ask extends TimeEntity{
     @Column(nullable = false)
     private String tags;
 
+
+    @Column
+    private boolean anonymous;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_no")
     private Member member;
-
 
 
     @OneToMany(mappedBy = "ask", fetch = FetchType.LAZY)

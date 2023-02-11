@@ -1,43 +1,90 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel=stylesheet type="text/css" href="/css/board.css">
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/bootstrap.css">
+<head> <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/top.js"></script>
+</head>
 <style>
 
-    .top{
-        margin-top : 10px;
-    }
-    .member-name-link{
-        display: flex;
-        justify-content: space-between;
-    }
+.card{
+    float: left;
+    margin-right: 20px;
+    width: 18rem;
+}
 </style>
 <body>
-<div class="top"></div>
+
+<div class="top">
+   <!-- <nav class="navbar navbar-expand-lg bg-light" style="background-color: #20c997">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">K.Knock</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/members/new">회원가입/a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/members">회원목록</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/questions/questionList">질문목록</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/questions/new">질문 작성</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+-->
+</div>
+<div class="gap"></div>
 <div class="grid-container">
-<div class="left"></div>
+    <div class="left">
+        <div class="dropdown">
+            <button class="dropbtn" type="button">
+                 <span
+                         class="dropbtn_icon">Tags</span>
+            </button>
+            <ul class="dropdown-content">
+                <li><a href="/questions/tagList?tags=C">C</a></li>
+                <li><a href="/questions/tagList?tags=Pawnable">Pawnable</a></li>
+                <li><a href="/questions/tagList?tags=Reversing">Reversing</a></li>
+                <li><a href="/questions/tagList?tags=Web">Web</a></li>
+                <li><a href="/questions/tagList?tags=Crypto">Crypto</a></li>
+            </ul>
+        </div>
+    </div>
 <div class="center">
+    <h2>User</h2>
+    <br><br><br><hr>
 <div class="container">
 
     <div>
-        <table>
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>이름</th>
-            </tr>
-            </thead>
-            <tbody>
-            <span th:each="member : ${members}">
-                <div class="member-name-link">
+ <span th:each="member : ${members}">
+        <div class="card" style="width: 16rem;">
+            <img src="/image/감자.jpg" class="card-img-top" alt="..." style="width: 12rem; ">
+            <div class="card-body">
                 <a th:text="${member.name}" th:href="@{'/members/memberPage/'+ ${member.no}}"></a>
+                <p class="card-text"></p>
 
-                </div>
+            </div>
+        </div>
+          </span>
 
 
-            </span>
-            </tbody>
-        </table>
+
     </div>
 </div>
 

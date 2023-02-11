@@ -1,53 +1,103 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/css/board.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<head> <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/top.js"></script>
+</head>
+<style>
+
+    .contents{
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break:break-all;
+
+
+    height: 30px;}
+    .container{
+        margin: 0 auto;
+        width: 720px;
+    }
+    table{
+        width:720px;
+    }
+
+
+</style>
 <body>
-<div class="container">
-    <div>
-        <table>
-            <thead>
-            <tr>
 
-                <th>제목</th>
-            </tr>
-            </thead>
-            <tbody>
-            //ask list
+<div class="top">
 
-            <span th:each="asks : ${asks}">
+</div>
+<div class="gap"></div>
+<div class="grid-container">
+<div class="left">
+    <div class="dropdown">
+        <button class="dropbtn" type="button">
+                 <span
+                         class="dropbtn_icon">Tags</span>
+        </button>
+        <ul class="dropdown-content">
+            <li><a href="/questions/tagList?tags=C">C</a></li>
+            <li><a href="/questions/tagList?tags=Pawnable">Pawnable</a></li>
+            <li><a href="/questions/tagList?tags=Reversing">Reversing</a></li>
+            <li><a href="/questions/tagList?tags=Web">Web</a></li>
+            <li><a href="/questions/tagList?tags=Crypto">Crypto</a></li>
+        </ul>
+    </div>
+</div>
+<div class="center">
+
+        <div class="container">
+            <table class="table table-hover">
+                <div>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>제목</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <span th:each="title: ${title}">
                 <tr>
                 <td>
-                    <a th:text="${asks.title}" th:href="@{'/questions/'+ ${asks.no}}" ></a>
+                    <a th:text="${title.title}" th:href="@{'/questions/'+ ${title.no}}" ></a>
                 </td>
-                <td th:text="${asks.contents}"></td>
-                <td th:text="${asks.tags}"></td>"
+                <td th:text="${title.contents}"></td>
+                <td th:text="${title.tags}"></td>
                 </tr>
             </span>
-
-
-            </tbody>
-        </table>
-
-
-        <table>
-
-            <thead>
-            <tr>
-
-                <th>내용</th>
-            </tr>
-            </thead>
-            <tbody>
-            <p> 내용</p>
-            <span th:each="content : ${content}">
+                        </tbody>
+                    </table>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>내용</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <span th:each="content : ${content}">
                 <tr>
                 <td>
                     <a th:text="${content.title}" th:href="@{'/questions/'+ ${content.no}}" ></a>
                 </td>
                 <td th:text="${content.contents}"></td>
-                <td th:text="${content.tags}"></td>"
+                <td th:text="${content.tags}"></td>
                 </tr>
             </span>
-            </tbody>
-        </table>
-    </div>
+                        </tbody>
+                    </table>
+                </div>
+            </table>
+
+        </div>
+
 </div>
+
+<div class="right"></div>
+</div>
+</body>
+</html>

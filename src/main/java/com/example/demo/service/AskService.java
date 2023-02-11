@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.controller.AskForm;
 import com.example.demo.domain.Ask;
+import com.example.demo.domain.Comment;
 import com.example.demo.dto.AskRequestDto;
 import com.example.demo.dto.AskResponseDto;
 import com.example.demo.repository.AskRepository;
@@ -63,6 +64,11 @@ public List<Ask> findAllByTags(String tags) {
             return askRepository.findAllByTags(tags);
         }
         return null;
+    }
+
+    public void edit(Long no, AskRequestDto requestDto) {
+        Ask ask = askRepository.findByNo(no).get();
+        ask.update(requestDto.getTitle(), requestDto.getContents(), requestDto.getTags());
     }
 
 
