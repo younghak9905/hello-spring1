@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="/css/board.css">
 <!--<link rel="stylesheet" type="text/css" href="/css/questionList.css">-->
 <head> <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/js/top.js"></script>
+
 </head>
 <style>
    .contents{
@@ -20,10 +20,51 @@
        height: 30px;
 
     }
+
+   .tag-box {
+       border: 1px solid rgba(0, 0, 0, 0.2); /* 테두리 스타일 지정 */
+       padding: 5px; /* 안쪽 여백 지정 */
+       display: inline-block;
+       background: #adb5bd;
+       height:40px;    /* 인라인 요소로 배치 */
+   }
+
+   .tag {
+       opacity: 0.8; /* 투명도 지정 */
+   }
 </style>
 <body>
 <div class="top">
+    <nav class="navbar navbar-expand-lg bg-light" style="background-color: #20c997">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">K.Knock</a>
 
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item" style="color: #1a1e21!important;">
+                        <a class="nav-link" href="/members">회원목록</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/members/new">회원가입
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/questions/questionList">질문목록</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/questions/new">질문 작성</a>
+                    </li>
+                </ul>
+                <form action="/search" name="search" class="d-flex" role="search" method="post">
+                    <input class="form-control me-2" type="text" placeholder="Search" name="search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
 
 </div>
 <div class="gap"></div>
@@ -60,7 +101,13 @@
                    th:text="${#lists.size(ask.comment)}"></span>
 
                 <p th:text="${ask.contents}" class="contents"></p>
-                <p th:text="${ask.tags}" ></p>
+                     <div class="tag-box">
+                        <div class="tag">
+                            <p th:text="${ask.tags}"></p>
+                        </div>
+                    </div>
+
+
                 <p th:text="${ask.createdDate}" style="float: right"></p>
                 <br>
                     <hr>
