@@ -103,6 +103,18 @@ this.em = em;
     .getSingleResult();
     }
 
+
+    @Override
+    public Comment findByAskNoAndSelected(Long askNo,String selected){
+        return em.createQuery("select c from Comment c where c.ask.no = :askNo and c.selected = :selected", Comment.class)
+                .setParameter("askNo", askNo)
+                .setParameter("selected", selected)
+
+                .getSingleResult();
+    }
+
+
+
     @Override
     public List<Comment> findAll(Sort sort) {
         return null;

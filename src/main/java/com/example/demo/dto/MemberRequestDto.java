@@ -19,6 +19,18 @@ public class MemberRequestDto {
     private String github;
     private String blog;
 
+    private String role;
+
+    public MemberRequestDto(Member member) {
+        this.name = member.getName();
+        this.email = member.getEmail();
+        this.password = member.getPassword();
+        this.id = member.getId();
+        this.github = member.getGithub();
+        this.blog = member.getBlog();
+        this.role = member.getRole();
+    }
+
 
     public Member toEntity() {
         Member member =Member.builder()
@@ -28,6 +40,7 @@ public class MemberRequestDto {
                 .id(id)
                 .github(github)
                 .blog(blog)
+                .role(role)
                 .build();
         return member;
 

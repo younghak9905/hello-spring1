@@ -87,11 +87,11 @@ public class CommentService {
         );
 
         Long askNo= comment.getAsk().getNo();
-        Comment AlreadySelected = commentRepository.findBySelected(askNo);
+        Comment AlreadySelected = commentRepository.findByAskNoAndSelected(askNo,"true");
         if(AlreadySelected != null){
-            AlreadySelected.setSelected(0L);
+            AlreadySelected.setSelected("false");
         }
-        comment.setSelected(1L);
+        comment.setSelected("true");
 
         return askNo;
     }

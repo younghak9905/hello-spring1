@@ -31,7 +31,7 @@ public class Comment{
     private Long depth;
 
     @Column(name="selected")
-    private Long selected;
+    private String selected;
 
 
     @ManyToOne(fetch = FetchType.LAZY)

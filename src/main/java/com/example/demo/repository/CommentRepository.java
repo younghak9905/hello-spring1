@@ -37,7 +37,7 @@ public interface CommentRepository  extends JpaRepository<Comment, Long> {
 
     List<Comment> findByCommentGroup(Long commentNo);
 
-
+   Comment findByAskNoAndSelected(Long askNo,String selected);
 
     Comment findBySelected(Long askNo);
     //u Comment update(Long commentNo, String reply

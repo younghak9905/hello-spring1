@@ -21,7 +21,7 @@ public class CommentRequestDto {
     private Long commentGroup=0L;
     private Long depth=0L;
 
-    private Long selected=0L;
+    private String selected="false";
     public Comment toEntity() {
         Comment comments = Comment.builder()
                 .commentNo(commentNo)

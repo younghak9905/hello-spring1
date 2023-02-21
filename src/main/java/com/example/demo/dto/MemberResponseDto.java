@@ -15,6 +15,7 @@ public class MemberResponseDto {
     private String id;
     private String github;
     private String blog;
+    private String role;
 
     private List<CommentResponseDto> comments;
     private List<AskResponseDto> ask;
@@ -24,9 +25,10 @@ public class MemberResponseDto {
         this.name = entity.getName();
         this.email = entity.getEmail();
         this.password = entity.getPassword();
-        this.id = entity.getId();
+        this.id= entity.getId();
         this.github = entity.getGithub();
         this.blog = entity.getBlog();
+        this.role = entity.getRole();
 
         this.comments = entity.getComment().stream()
                 .map(CommentResponseDto::new)

@@ -19,10 +19,10 @@ public class HomeController{
 
 
 
-    @GetMapping("/")
+   /* @GetMapping("/")
     public String home() {
         return "/home";
-    }
+    }*/
 
     @RequestMapping("/jsp")
     public String home_jsp() {
