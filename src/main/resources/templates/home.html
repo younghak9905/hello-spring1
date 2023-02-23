@@ -10,7 +10,11 @@
         <h1>Hello Spring</h1>
         <p>회원 기능</p>
         <p>
-            <a href="/join">회원 가입</a>
+            <form action="/logout" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit">로그아웃</button>
+             </form>
+            <a href="/logout">로그아웃</a>
             <a href="/members">회원 목록</a>
             <a href="/questions/new">질문 작성</a>
             <a href="/questions/questionList">질문리스트</a>

@@ -33,10 +33,20 @@ public class LoginController {
     private final UserService userService;
     @GetMapping("/")
     public String home(Model model) { // 인증된 사용자의 정보를 보여줌
-        Long no = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        // token에 저장되어 있는 인증된 사용자의 id 값
+        // 인증된 사용자의 정보를 가져옴 로그인한 상태가 아니라면 loginhome을 반환
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "loginhome";
+        }
 
-       Member userVo = userService.getUserByNo(no);
+
+
+        System.out.println("token: "+authentication.getName());
+        System.out.println("token: "+authentication);
+        String id=authentication.getName();
+        // token에 저장되어 있는 인증된 사용자의 id 값
+        Member member =userService.getUserById(id);
+        MemberRequestDto userVo = new MemberRequestDto(member);
         userVo.setPassword(null); // password는 보이지 않도록 null로 설정
         model.addAttribute("user", userVo);
         return "home";
@@ -88,7 +98,7 @@ public class LoginController {
 
     @GetMapping("/update")
     public String editPage(Model model) { // 회원 정보 수정 페이지
-        Long no = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long no = (Long)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Member member = userService.getUserByNo(no);
         model.addAttribute("user", member);
         return "editPage";
@@ -96,7 +106,7 @@ public class LoginController {
 
     @PostMapping("/delete")
     public String withdraw(HttpSession session) { // 회원 탈퇴
-        Long no = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+       Long no = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (no != null) {
             userService.withdraw(no);
         }

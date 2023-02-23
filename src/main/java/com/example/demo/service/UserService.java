@@ -24,10 +24,8 @@ public class UserService {
 
 
     public Member getUserByNo(Long no) {
-        Optional<Member> optionalMember = memberRepository.findById(no);
-
-        Member member = optionalMember.orElseGet(() -> null);
-        return member;
+Optional<Member> optionalMember = memberRepository.findByNo(no);
+        return optionalMember.orElse(null);
     }
 
     public Member getUserById(String id) {

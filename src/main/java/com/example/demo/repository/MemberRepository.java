@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.domain.Member;
+import com.example.demo.dto.MemberRequestDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -23,4 +24,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
      Optional<Member> findByNo(Long no);
      Member deleteByNo(Long no);
       // Member update(Member member);
+
+
+
+
 }

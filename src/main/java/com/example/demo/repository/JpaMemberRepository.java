@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.domain.Member;
+import com.example.demo.dto.MemberRequestDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -74,6 +75,7 @@ public class JpaMemberRepository implements MemberRepository {
         return member;
     }
 
+
    /* @Override
     public Member update(Member member) {
         em.merge(member);
@@ -111,6 +113,7 @@ public class JpaMemberRepository implements MemberRepository {
     public void deleteById(Long aLong) {
 
     }
+
 
     @Override
     public void delete(Member entity) {

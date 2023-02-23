@@ -21,6 +21,8 @@ public class Member implements UserDetails {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
+
+
     private String name;
     private String email;
     private String password;
@@ -46,6 +48,7 @@ public class Member implements UserDetails {
         this.github = userVo.getGithub();
         this.blog = userVo.getBlog();
         this.role = userVo.getRole();
+
     }
 
 
@@ -83,6 +86,7 @@ public class Member implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 
 
 }

@@ -21,6 +21,7 @@ public class MemberRequestDto {
 
     private String role;
 
+
     public MemberRequestDto(Member member) {
         this.name = member.getName();
         this.email = member.getEmail();
@@ -29,6 +30,7 @@ public class MemberRequestDto {
         this.github = member.getGithub();
         this.blog = member.getBlog();
         this.role = member.getRole();
+
     }
 
 
@@ -41,6 +43,7 @@ public class MemberRequestDto {
                 .github(github)
                 .blog(blog)
                 .role(role)
+
                 .build();
         return member;
 
