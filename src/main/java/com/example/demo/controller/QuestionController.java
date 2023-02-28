@@ -14,6 +14,8 @@ import com.example.demo.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,17 +32,24 @@ public class QuestionController {
     private final CommentRepository commentRepository;
     private final MemberRepository memberRepository;
 
-    private final Long writer_no = 1L;
+
+
+
     @GetMapping(value = "/new")
     public String createForm() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String id = authentication.getName();
+        if(id.equals("anonymousUser")){
+            return "redirect:/members/login";
+        }
         return "/questions/write";
     }
     @PostMapping(value="/new/questionList")
     public String create(AskRequestDto requestDto) {
-
-        Optional<Member> member =memberRepository.findByNo(writer_no);
-        requestDto.setWriter(member.get());
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String id = authentication.getName();
+        Member loginMember=memberRepository.findById(id);
+          requestDto.setWriter(loginMember);
         askService.write(requestDto);
         return "redirect:/questions/questionList";
     }
@@ -53,6 +62,13 @@ public class QuestionController {
     }
     @GetMapping(value="/{no}")
     public String detail(Model model , @PathVariable("no") Long no) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String id = authentication.getName();
+        if(!id.equals("anonymousUser")){
+            Member loginMember=memberRepository.findById(id);
+            model.addAttribute("loginMember",loginMember);
+        }
+
         AskResponseDto ask = askService.findAsk(no);
         List<CommentResponseDto> comments = ask.getComments();
         List<CommentResponseDto> reply = ask.getComments();
@@ -69,25 +85,28 @@ public class QuestionController {
 
       }
 
-
-
       model.addAttribute("asks",ask);
 
       return "questions/view";
     }
     @GetMapping(value="/edit/{no}")
     public String edit(@PathVariable("no") Long no, Model model) {
-        AskResponseDto ask = askService.findAsk(no);
-        if(ask.getWriter().getNo() == writer_no)
-        {
-            model.addAttribute("asks", ask);
-            return "/questions/edit";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String id = authentication.getName();
+        if(!id.equals("anonymousUser")){
+            Member loginMember=memberRepository.findById(id);
+            AskResponseDto ask = askService.findAsk(no);
+            if(ask.getWriter().getNo() == loginMember.getNo())//작성자와 로그인한 사람이 같을 때만 수정 가능
+            {
+                model.addAttribute("asks", ask);
+                return "/questions/edit";
 
-
+            }
+            return "redirect:/questions/"+no;
         }
 
 
-        return "redirect:/questions"+no;
+        return "redirect:/members/login";
     }
 
 
@@ -102,17 +121,26 @@ public class QuestionController {
 
     @PostMapping(value="/delete/{no}")
     public String delete(@PathVariable("no") Long no) {
-        AskResponseDto ask= askService.findAsk(no);
-        List<CommentResponseDto> comments = ask.getComments();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String id = authentication.getName();
+        if(!id.equals("anonymousUser")){
+            Member loginMember=memberRepository.findById(id);
+            AskResponseDto ask= askService.findAsk(no);
+            List<CommentResponseDto> comments = ask.getComments();
 
-        if(ask.getWriter().getNo() == writer_no)
-        {
-            askService.delete(no);
-            return "redirect:/questions/questionList";
+            if(ask.getWriter().getNo() == loginMember.getNo())//작성자와 로그인한 사람이 일치해야 삭제 가능
+            {
+                askService.delete(no);
+                return "redirect:/questions/questionList";
 
+            }
+            return "redirect:/questions/"+no;
         }
 
-        return "redirect:/questions"+no;
+
+
+
+        return "redirect:/members/login";
     }
 
 }
