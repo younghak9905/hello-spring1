@@ -23,7 +23,7 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
         String id = authentication.getName();
-        Member member = memberRepository.findById(id).get();
+        Member member = memberRepository.findById(id);
         setDefaultTargetUrl("/");
         request.getSession().setAttribute("member", member);
         super.onAuthenticationSuccess(request, response, authentication);
