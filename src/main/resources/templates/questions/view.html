@@ -118,9 +118,8 @@
                     </div>
                     <p th:text="'작성자:  '+${asks.getWriter().getName()}" th:if="${asks.anonymous==false}" style="text-align:right;"></p>
                     <div class="btn-group">
-                        <form th:action="@{|/questions/edit/${asks.no}|}" th:method="get">
-
-                            <button type="submit">수정</button>
+                        <form th:action="@{|/questions/edit/${asks.no}|}" th:method="get" >
+                            <button type="submit" >수정</button>
                         </form>
 
                     <form th:action="@{|/questions/delete/${asks.no}|}" method="post">
@@ -174,7 +173,7 @@
                                   th:id="'edit-button'+${comment.commentNo}">수정</button>
 
                      </form>
-                    <form th:action="@{|/questions/comment/delete/${comment.commentNo}|}" th:if="${comment.getWriter().getNo()==1}">
+                    <form th:action="@{|/questions/comment/delete/${comment.commentNo}|}" >
 
                         <button type="submit" >삭제</button>
                     </form>
