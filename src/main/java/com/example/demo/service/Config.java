@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.AskRepository;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 
 @Configuration
@@ -20,7 +21,13 @@ public class Config {
         this.commentRepository = commentRepository;
     }
 
-
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setDefaultEncoding("UTF-8"); // 파일 인코딩 설정
+        multipartResolver.setMaxUploadSizePerFile(50 * 1024 * 1024); // 파일당 업로드 크기 제한 (50MB)
+        return multipartResolver;
+    }
 
     @Bean
     public MemberService memberService() {
